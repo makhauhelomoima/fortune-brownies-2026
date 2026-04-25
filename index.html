@@ -2,51 +2,77 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
   <title>The Fortune Brownies ©2026</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body {
+      height: 100%;
+      overflow-x: hidden;
+    }
     body {
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-      background: linear-gradient(135deg, #8B4513 0%, #D2691E 100%);
+      background: linear-gradient(180deg, #8B4513 0%, #6B2F0A 100%);
       color: #fff;
-      min-height: 100vh;
       display: flex;
       align-items: center;
       justify-content: center;
-      text-align: center;
-      padding: 20px;
+      padding: 16px;
     }
     .container {
-      max-width: 400px;
-      background: rgba(0,0,0,0.3);
-      padding: 40px 30px;
-      border-radius: 20px;
-      backdrop-filter: blur(10px);
+      width: 100%;
+      max-width: 340px;
+      background: rgba(20, 10, 5, 0.85);
+      padding: 32px 24px 24px;
+      border-radius: 16px;
+      border: 1px solid rgba(255, 215, 0, 0.2);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.4);
     }
-    h1 { font-size: 2.5rem; margin-bottom: 10px; }
-    .tagline { font-size: 1.1rem; opacity: 0.9; margin-bottom: 30px; }
+    h1 { 
+      font-size: 1.75rem; 
+      margin-bottom: 8px;
+      line-height: 1.2;
+      font-weight: 700;
+    }
+    .tagline { 
+      font-size: 0.95rem; 
+      opacity: 0.85; 
+      margin-bottom: 24px;
+      line-height: 1.4;
+    }
     .price { 
-      font-size: 3rem; 
-      font-weight: bold; 
-      margin: 20px 0;
+      font-size: 2.5rem; 
+      font-weight: 800; 
+      margin: 16px 0 24px;
       color: #FFD700;
+      letter-spacing: -1px;
     }
     button {
       background: #FFD700;
-      color: #8B4513;
+      color: #3B1F00;
       border: none;
-      padding: 18px 40px;
-      font-size: 1.2rem;
-      font-weight: bold;
-      border-radius: 50px;
+      padding: 16px 20px;
+      font-size: 1rem;
+      font-weight: 700;
+      border-radius: 12px;
       cursor: pointer;
       width: 100%;
-      transition: transform 0.2s;
+      transition: all 0.15s;
     }
-    button:hover { transform: scale(1.05); }
-    button:active { transform: scale(0.98); }
-    .contact { margin-top: 20px; font-size: 0.9rem; opacity: 0.8; }
+    button:active { 
+      transform: scale(0.97);
+      background: #E6C200;
+    }
+    button:disabled {
+      opacity: 0.7;
+      transform: scale(1);
+    }
+    .contact { 
+      margin-top: 16px; 
+      font-size: 0.8rem; 
+      opacity: 0.7;
+      letter-spacing: 0.3px;
+    }
   </style>
 </head>
 <body>
@@ -66,12 +92,9 @@
   <script>
     async function buyKit() {
       const email = prompt('Enter your email:');
+      if (!email) return;
       const phone = prompt('Enter your Mpesa number: +266');
-      
-      if (!email || !phone) {
-        alert('Please enter both email and phone');
-        return;
-      }
+      if (!phone) return;
       
       const btn = document.querySelector('button');
       btn.innerHTML = 'Processing...';
@@ -94,13 +117,13 @@
         });
         
         if (res.ok) {
-          alert('Order received! We will WhatsApp you Mpesa details for M250. Check your email.');
+          alert('Order received! We will WhatsApp you Mpesa details for M250.');
           btn.innerHTML = 'Order Received ✅';
         } else {
           throw new Error('Failed');
         }
       } catch (err) {
-        alert('Error. Please WhatsApp +26657031600 to order directly.');
+        alert('Error. WhatsApp +26657031600 to order directly.');
         btn.innerHTML = 'Buy Franchise Kit - Mpesa M250';
         btn.disabled = false;
       }
