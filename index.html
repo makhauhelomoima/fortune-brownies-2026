@@ -2,91 +2,105 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>The Fortune Brownies ©2026</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     html, body {
       height: 100%;
-      overflow-x: hidden;
+      background: #000;
     }
     body {
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-      background: linear-gradient(180deg, #8B4513 0%, #6B2F0A 100%);
       color: #fff;
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 16px;
+      padding: 0;
+      min-height: 100vh;
+      background: radial-gradient(ellipse at center, #1a1a1a 0%, #000 100%);
     }
     .container {
       width: 100%;
-      max-width: 340px;
-      background: rgba(20, 10, 5, 0.85);
-      padding: 32px 24px 24px;
-      border-radius: 16px;
-      border: 1px solid rgba(255, 215, 0, 0.2);
-      box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+      height: 100%;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      text-align: center;
+    }
+    .card {
+      background: linear-gradient(145deg, #1a0f08 0%, #2d1810 100%);
+      padding: 40px 28px;
+      border-radius: 24px;
+      border: 2px solid #FFD700;
+      box-shadow: 0 0 40px rgba(255, 215, 0, 0.2), 0 8px 32px rgba(0,0,0,0.8);
+      margin: auto 0;
     }
     h1 { 
-      font-size: 1.75rem; 
-      margin-bottom: 8px;
+      font-size: 2rem; 
+      margin-bottom: 12px;
       line-height: 1.2;
-      font-weight: 700;
+      font-weight: 800;
+      color: #FFD700;
     }
     .tagline { 
-      font-size: 0.95rem; 
-      opacity: 0.85; 
-      margin-bottom: 24px;
+      font-size: 1rem; 
+      opacity: 0.9; 
+      margin-bottom: 32px;
       line-height: 1.4;
     }
     .price { 
-      font-size: 2.5rem; 
-      font-weight: 800; 
-      margin: 16px 0 24px;
+      font-size: 3.5rem; 
+      font-weight: 900; 
+      margin: 24px 0 32px;
       color: #FFD700;
-      letter-spacing: -1px;
+      letter-spacing: -2px;
+      text-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
     }
     button {
-      background: #FFD700;
-      color: #3B1F00;
+      background: linear-gradient(145deg, #FFD700 0%, #E6C200 100%);
+      color: #000;
       border: none;
-      padding: 16px 20px;
-      font-size: 1rem;
-      font-weight: 700;
-      border-radius: 12px;
+      padding: 20px 20px;
+      font-size: 1.15rem;
+      font-weight: 800;
+      border-radius: 16px;
       cursor: pointer;
       width: 100%;
       transition: all 0.15s;
+      box-shadow: 0 4px 20px rgba(255, 215, 0, 0.3);
     }
     button:active { 
-      transform: scale(0.97);
-      background: #E6C200;
+      transform: scale(0.96);
+      box-shadow: 0 2px 10px rgba(255, 215, 0, 0.2);
     }
     button:disabled {
       opacity: 0.7;
       transform: scale(1);
     }
     .contact { 
-      margin-top: 16px; 
-      font-size: 0.8rem; 
-      opacity: 0.7;
-      letter-spacing: 0.3px;
+      margin-top: 24px; 
+      font-size: 0.95rem; 
+      opacity: 0.9;
+      letter-spacing: 0.5px;
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <h1>🍫 The Fortune Brownies ©2026</h1>
-    <p class="tagline">Own your town. One tray at a time.</p>
-    
-    <div class="price">M250</div>
-    
-    <button onclick="buyKit()">
-      Buy Franchise Kit - Mpesa M250
-    </button>
-    
-    <p class="contact">WhatsApp: +26657031600</p>
+    <div class="card">
+      <h1>🍫 The Fortune Brownies ©2026</h1>
+      <p class="tagline">Own your town. One tray at a time.</p>
+      
+      <div class="price">M250</div>
+      
+      <button onclick="buyKit()">
+        Buy Franchise Kit - Mpesa M250
+      </button>
+      
+      <p class="contact">WhatsApp: +26657031600</p>
+    </div>
   </div>
 
   <script>
@@ -116,4 +130,31 @@
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
-            'apikey': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJqYmlpcWFtZGd2aWJhenBtbXp4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTQ
+            'apikey': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJqYmlpcWFtZGd2aWJhenBtbXp4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTQyNTU5NDcsImV4cCI6MjA2OTgzMTk0N30.T8HYkA2C4wMJW21DDIOZcMSWUkHuwX9gZV4FPoAOuRA'
+          },
+          body: JSON.stringify({
+            email: email,
+            phone: phone,
+            amount: 250,
+            currency: 'M',
+            status: method ? 'pending_mpesa' : 'pending_eft',
+            payment_method: method ? 'mpesa' : 'postbank_eft'
+          })
+        });
+        
+        if (method) {
+          alert(`MPESA M250\n\n1. Go to Mpesa Menu\n2. Send Money → ${MPESA_NUMBER}\n3. Amount: M250\n4. Reference: ${phone}\n\nWe'll confirm on WhatsApp.`);
+        } else {
+          alert(`LESOTHO POST BANK M250\n\nBank: ${BANK_DETAILS.bank}\nAcc: ${BANK_DETAILS.account}\nName: ${BANK_DETAILS.name}\nBranch: ${BANK_DETAILS.branch}\nRef: ${phone}\n\nSend proof to WhatsApp ${MPESA_NUMBER}`);
+        }
+        
+        btn.innerHTML = 'Order Received ✅';
+      } catch (err) {
+        alert(`Error. WhatsApp ${MPESA_NUMBER} to order directly.`);
+        btn.innerHTML = 'Buy Franchise Kit - Mpesa M250';
+        btn.disabled = false;
+      }
+    }
+  </script>
+</body>
+</html>
