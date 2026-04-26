@@ -4,37 +4,32 @@
   padding: 0;
 }
 
-body {
-  background-color: #000000;
-  color: #FFD700;
-  font-family: 'Arial', sans-serif;
-  font-size: 16px;
-  line-height: 1.6;
+html {
+  font-size: 22px;
   -webkit-text-size-adjust: 100%;
 }
 
-/* Mobile text scaling */
-html {
-  font-size: 18px; /* Base size bigger for mobile */
+body {
+  background-color: #000000;
+  color: #FF6A00;
+  font-family: Arial, sans-serif;
+  line-height: 1.5;
+  min-height: 100vh;
 }
 
-@media (max-width: 480px) {
-  html {
-    font-size: 20px; /* Even bigger on small phones */
+h1 { font-size: 2.4rem; line-height: 1.1; }
+h2 { font-size: 1.9rem; }
+h3 { font-size: 1.5rem; }
+p, div, span { font-size: 1.15rem; }
+
+button, a {
+  font-size: 1.2rem;
+  min-height: 52px;
+  touch-action: manipulation;
+  cursor: pointer;
+}
+
+input, select, textarea {
+  font-size: 1.2rem;
+  min-height: 52px;
   }
-}
-
-h1 { font-size: 2.2rem; line-height: 1.2; }
-h2 { font-size: 1.8rem; }
-h3 { font-size: 1.4rem; }
-p { font-size: 1.1rem; }
-
-button {
-  font-size: 1.1rem;
-  min-height: 48px; /* Thumb-friendly */
-}
-
-/* Prevent zoom on input focus */
-input, button, select, textarea {
-  font-size: 16px;
-    }
