@@ -48,7 +48,7 @@ export default function Dashboard() {
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
-      fontSize: '1.5rem'
+      fontSize: '1.6rem'
     }}>
       Loading Fort Knox...
     </div>
@@ -59,35 +59,32 @@ export default function Dashboard() {
       backgroundColor: '#000000',
       color: '#FF6A00',
       minHeight: '100vh',
-      padding: '1rem',
-      fontFamily: 'Arial'
+      padding: '1rem'
     }}>
       <div style={{
         maxWidth: '500px',
         margin: '0 auto'
       }}>
-        {/* Header */}
         <div style={{
           display: 'flex',
           justifyContent: 'space-between',
           alignItems: 'center',
           marginBottom: '1.5rem'
         }}>
-          <h1 style={{ fontSize: '1.8rem' }}>Fort Knox Vault 🧡🍫♾️</h1>
+          <h1 style={{ fontSize: '1.9rem' }}>Fort Knox Vault 🧡🍫♾️</h1>
           <button onClick={handleLogout} style={{
             backgroundColor: '#FF6A00',
             color: '#000000',
-            padding: '10px 16px',
+            padding: '12px 18px',
             border: 'none',
             borderRadius: '8px',
             fontWeight: 'bold',
-            fontSize: '1rem'
+            fontSize: '1.1rem'
           }}>
             Lock
           </button>
         </div>
 
-        {/* Profile Card */}
         <div style={{
           backgroundColor: '#1a1a1a',
           border: '2px solid #FF6A00',
@@ -95,26 +92,26 @@ export default function Dashboard() {
           padding: '1.5rem',
           marginBottom: '1.5rem'
         }}>
-          <h2 style={{ fontSize: '1.4rem', marginBottom: '1rem', color: '#FF6A00' }}>
+          <h2 style={{ fontSize: '1.5rem', marginBottom: '1rem' }}>
             {profile?.full_name || profile?.email}
           </h2>
           <div style={{ 
             backgroundColor: '#FF6A00', 
             color: '#000', 
-            padding: '6px 12px', 
+            padding: '8px 14px', 
             borderRadius: '20px',
             display: 'inline-block',
             fontWeight: 'bold',
-            marginBottom: '1rem'
+            marginBottom: '1rem',
+            fontSize: '1.1rem'
           }}>
             Rank: {profile?.rank}
           </div>
-          <p style={{ fontSize: '0.9rem', opacity: '0.8', color: '#FF6A00' }}>
+          <p style={{ fontSize: '1rem', opacity: '0.8' }}>
             Member since: {new Date(profile?.created_at).toLocaleDateString()}
           </p>
         </div>
 
-        {/* Stats Grid */}
         <div style={{
           display: 'grid',
           gridTemplateColumns: '1fr 1fr',
@@ -124,30 +121,29 @@ export default function Dashboard() {
           <div style={{
             backgroundColor: '#1a1a1a',
             border: '1px solid #FF6A00',
-            padding: '1.2rem',
+            padding: '1.3rem',
             borderRadius: '12px',
             textAlign: 'center'
           }}>
-            <div style={{ fontSize: '2.2rem', fontWeight: 'bold', color: '#FF6A00' }}>
+            <div style={{ fontSize: '2.4rem', fontWeight: 'bold' }}>
               {profile?.total_referrals}
             </div>
-            <div style={{ fontSize: '1rem', color: '#FF6A00' }}>Referrals</div>
+            <div style={{ fontSize: '1.1rem' }}>Referrals</div>
           </div>
           <div style={{
             backgroundColor: '#1a1a1a',
             border: '1px solid #FF6A00',
-            padding: '1.2rem',
+            padding: '1.3rem',
             borderRadius: '12px',
             textAlign: 'center'
           }}>
-            <div style={{ fontSize: '2.2rem', fontWeight: 'bold', color: '#FF6A00' }}>
+            <div style={{ fontSize: '2.4rem', fontWeight: 'bold' }}>
               {profile?.points_balance}
             </div>
-            <div style={{ fontSize: '1rem', color: '#FF6A00' }}>Points</div>
+            <div style={{ fontSize: '1.1rem' }}>Points</div>
           </div>
         </div>
 
-        {/* Wallet */}
         <div style={{
           backgroundColor: '#1a1a1a',
           border: '2px solid #FF6A00',
@@ -156,13 +152,12 @@ export default function Dashboard() {
           marginBottom: '1.5rem',
           textAlign: 'center'
         }}>
-          <div style={{ fontSize: '1rem', marginBottom: '0.5rem', color: '#FF6A00' }}>Wallet Balance</div>
-          <div style={{ fontSize: '2.5rem', fontWeight: 'bold', color: '#FF6A00' }}>
+          <div style={{ fontSize: '1.1rem', marginBottom: '0.5rem' }}>Wallet Balance</div>
+          <div style={{ fontSize: '2.7rem', fontWeight: 'bold' }}>
             M{profile?.wallet_balance?.toFixed(2)}
           </div>
         </div>
 
-        {/* Referral Link */}
         <div style={{
           backgroundColor: '#1a1a1a',
           border: '2px solid #FF6A00',
@@ -170,16 +165,15 @@ export default function Dashboard() {
           borderRadius: '12px',
           marginBottom: '1.5rem'
         }}>
-          <h3 style={{ fontSize: '1.2rem', marginBottom: '1rem', color: '#FF6A00' }}>Your Referral Link</h3>
+          <h3 style={{ fontSize: '1.3rem', marginBottom: '1rem' }}>Your Referral Link</h3>
           <div style={{
             backgroundColor: '#000',
             border: '1px solid #FF6A00',
-            padding: '12px',
+            padding: '14px',
             borderRadius: '8px',
-            fontSize: '0.9rem',
+            fontSize: '1rem',
             marginBottom: '1rem',
-            wordBreak: 'break-all',
-            color: '#FF6A00'
+            wordBreak: 'break-all'
           }}>
             fortunebrownies-2026.vercel.app/?ref={profile?.referral_code}
           </div>
@@ -187,11 +181,11 @@ export default function Dashboard() {
             width: '100%',
             backgroundColor: '#FF6A00',
             color: '#000000',
-            padding: '14px',
+            padding: '16px',
             border: 'none',
             borderRadius: '8px',
             fontWeight: 'bold',
-            fontSize: '1.1rem'
+            fontSize: '1.2rem'
           }}>
             Copy Referral Link
           </button>
@@ -199,4 +193,4 @@ export default function Dashboard() {
       </div>
     </div>
   )
-  }
+    }
