@@ -1,117 +1,211 @@
-import React, { useState, useEffect } from 'react';
-import { supabase, getCurrentPricing, registerFranchisee } from '../lib/supabase';
+import React, { useState } from 'react';
+import { supabase } from '../lib/supabase';
 
-const Level1Kit = () => {
-  const [pricing, setPricing] = useState({ price: 250, usd: 13.50, isLaunch: true, daysLeft: 90 });
-  const [settings, setSettings] = useState({});
-  const [phone, setPhone] = useState('');
-  const [fullName, setFullName] = useState('');
-  const [referralCode, setReferralCode] = useState('');
-  const [loading, setLoading] = useState(false);
-  const [submitted, setSubmitted] = useState(false);
-
-  useEffect(() => {
-    const loadData = async () => {
-      const priceData = await getCurrentPricing();
-      setPricing(priceData);
-
-      const { data } = await supabase.from('settings').select('key, value');
-      const settingsObj = {};
-      data?.forEach(s => settingsObj[s.key] = s.value);
-      setSettings(settingsObj);
-    };
-    loadData();
-  }, []);
+export default function Level1Kit() {
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    whatsapp: '',
+    location: ''
+  });
+  const [status, setStatus] = useState('idle');
+  const [message, setMessage] = useState('');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true);
+    setStatus('loading');
+    
     try {
-      const data = await registerFranchisee({
-        phone,
-        fullName: fullName || 'Makhauhelo Moima',
-        referredBy: referralCode || null
-      });
+      const { error } = await supabase
+        .from('franchisees')
+        .insert([
+          { 
+            ...formData, 
+            level: 1, 
+            payment_status: 'pending',
+            amount_paid: 250,
+            created_at: new Date()
+          }
+        ]);
+
+      if (error) throw error;
       
-      const msg = `I paid M${pricing.price} for Level 1 Kit. Name: ${fullName}. Phone: ${phone}. My new code: ${data.referral_code}`;
-      const whatsappNum = settings.whatsapp_support?.replace('+', '') || '26657031600';
-      window.location.href = `https://wa.me/${whatsappNum}?text=${encodeURIComponent(msg)}`;
-      setSubmitted(true);
-    } catch (err) {
-      alert('Error: ' + err.message);
+      setStatus('success');
+      setMessage('Application received! Check payment steps below.');
+      setFormData({ name: '', email: '', whatsapp: '', location: '' });
+    } catch (error) {
+      setStatus('error');
+      setMessage('Error: ' + error.message + '. WhatsApp +26657031600 for help.');
     }
-    setLoading(false);
   };
 
-  if (submitted) {
-    return (
-      <div className="bg-black text-white min-h-screen flex items-center justify-center p-4">
-        <div className="text-center">
-          <h1 className="text-4xl text-[#FFD700] font-black mb-4">🤍💛🖤♾️</h1>
-          <p className="text-xl">Success! Check WhatsApp {settings.whatsapp_support}</p>
-          <p className="text-sm mt-4">Kit sent. Welcome to Fort Knox.</p>
-        </div>
-      </div>
-    );
-  }
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
 
   return (
-    <div className="bg-black text-white min-h-screen p-4 md:p-8" style={{fontFamily: 'Open Sans, sans-serif'}}>
-      <div className="max-w-4xl mx-auto">
-        <h1 className="text-center text-4xl md:text-5xl font-black text-[#FFD700] mb-2" style={{fontFamily: 'Montserrat, sans-serif'}}>
-          🍫 FORTUNE BROWNIES 2026 ♾️
-        </h1>
-        <h2 className="text-center text-2xl md:text-3xl font-black text-[#FFD700] mb-6" style={{fontFamily: 'Montserrat, sans-serif'}}>
-          LEVEL 1: KITCHEN HUSTLER
-        </h2>
-
-        {pricing.isLaunch ? (
-          <div className="bg-[#8B0000] border-4 border-[#FFD700] p-6 mb-8 text-center animate-pulse">
-            <p className="text-[#FFD700] text-xl md:text-2xl font-black mb-2">🔥 90-DAY LAUNCH SPECIAL 🔥</p>
-            <p className="text-4xl md:text-6xl font-black text-white mb-2">
-              M{pricing.price} <span className="text-2xl text-[#90EE90]">(${pricing.usd} / R{pricing.price})</span>
-            </p>
-            <p className="text-[#FFD700] text-lg font-bold">Price increases to M500 in {pricing.daysLeft} days</p>
-            <p className="text-white text-xl font-black mt-2">SAVE M250 - JOIN NOW</p>
+    <div className="min-h-screen bg-gradient-to-br from-orange-50 to-amber-50 flex items-center justify-center p-4 font-sans">
+      <div className="bg-white rounded-2xl shadow-2xl p-8 max-w-2xl w-full border-4 border-orange-400">
+        
+        <div className="text-center mb-6">
+          <h1 className="text-4xl font-black text-orange-600 mb-2" style={{fontFamily: 'Montserrat, sans-serif'}}>
+            FORTUNE BROWNIES ©2026
+          </h1>
+          <div className="bg-orange-100 inline-block px-4 py-1 rounded-full">
+            <p className="text-lg font-bold text-orange-800">LEVEL 1: KITCHEN HUSTLER</p>
           </div>
-        ) : (
-          <div className="bg-[#0a0a0a] border-4 border-[#FFD700] p-6 mb-8 text-center">
-            <p className="text-4xl md:text-6xl font-black text-white">
-              M{pricing.price} <span className="text-2xl text-[#90EE90]">(${pricing.usd} / R{pricing.price})</span>
-            </p>
-          </div>
-        )}
-
-        <div className="bg-[#0a0a0a] border-4 border-[#FFD700] p-6 mb-8">
-          <h3 className="text-center text-[#FFD700] text-2xl font-black mb-4" style={{fontFamily: 'Montserrat, sans-serif'}}>
-            FORT KNOX PAYMENT VAULT
-          </h3>
-          <div className="text-center space-y-2 text-lg">
-            <p><strong>Account:</strong> {settings.owner_name || 'Makhauhelo Moima'}</p>
-            <p><strong>Bank:</strong> {settings.bank_name || 'Lesotho Post Bank'}</p>
-            <p><strong>Account No:</strong> {settings.bank_account || '1036202900018'}</p>
-            <p><strong>Mpesa:</strong> {settings.mpesa_number || '+26657031600'}</p>
-            <p><strong>Ecocash:</strong> {settings.ecocash_number || '+26662818000'}</p>
-            <p><strong>Reference:</strong> Your phone number</p>
-            <div className="h-0.5 bg-[#FFD700] my-4"></div>
-            <p className="text-[#FFD700] text-2xl font-black">Level 1: M{pricing.price} <span className="text-[#90EE90] text-lg">(${pricing.usd})</span></p>
-          </div>
+          <p className="text-gray-600 mt-3 text-lg">
+            Turn M250 into M2,500/month. Lesotho's first digital franchise game.
+          </p>
         </div>
 
-        <form onSubmit={handleSubmit} className="bg-[#0a0a0a] border-2 border-[#FFD700] p-6 mb-8">
-          <h3 className="text-[#FFD700] text-xl font-black mb-4">STEP 1: PAY → STEP 2: REGISTER HERE</h3>
-          <input type="text" placeholder="Full Name" value={fullName} onChange={e => setFullName(e.target.value)} className="w-full p-4 mb-3 text-black text-lg rounded" required />
-          <input type="tel" placeholder="Phone: 26657031600" value={phone} onChange={e => setPhone(e.target.value)} className="w-full p-4 mb-3 text-black text-lg rounded" required />
-          <input type="text" placeholder="Referral Code (optional)" value={referralCode} onChange={e => setReferralCode(e.target.value)} className="w-full p-4 mb-4 text-black text-lg rounded" />
-          <button type="submit" disabled={loading} className="w-full bg-[#FFD700] text-black py-4 text-xl md:text-2xl font-black rounded-lg hover:bg-[#FFC700] disabled:opacity-50" style={{fontFamily: 'Montserrat, sans-serif'}}>
-            {loading ? 'REGISTERING...' : `I PAID M${pricing.price} - SEND MY KIT`}
+        <div className="bg-amber-50 p-5 rounded-lg mb-6 border-l-4 border-amber-500">
+          <h2 className="font-bold text-xl mb-3 text-amber-900">You Get Instantly:</h2>
+          <ul className="space-y-2 text-gray-800">
+            <li className="flex items-start">
+              <span className="text-green-600 mr-2">✓</span>
+              <span><strong>Licensed Brand:</strong> Fortune Brownies name + logo to use</span>
+            </li>
+            <li className="flex items-start">
+              <span className="text-green-600 mr-2">✓</span>
+              <span><strong>Fudgy Brownie Recipe:</strong> Exact ingredients + method</span>
+            </li>
+            <li className="flex items-start">
+              <span className="text-green-600 mr-2">✓</span>
+              <span><strong>50 Fortune Slips PDF:</strong> Inspiring messages for customers</span>
+            </li>
+            <li className="flex items-start">
+              <span className="text-green-600 mr-2">✓</span>
+              <span><strong>WhatsApp Sales Scripts:</strong> Copy/paste messages that close</span>
+            </li>
+            <li className="flex items-start">
+              <span className="text-green-600 mr-2">✓</span>
+              <span><strong>Cost Calculator:</strong> Know profit on every tray</span>
+            </li>
+            <li className="flex items-start">
+              <span className="text-green-600 mr-2">✓</span>
+              <span><strong>Upgrade Path:</strong> Unlock Level 2 Cart Queen M650</span>
+            </li>
+          </ul>
+        </div>
+
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <div>
+            <label className="block text-sm font-bold text-gray-700 mb-1">Full Name *</label>
+            <input
+              type="text"
+              name="name"
+              value={formData.name}
+              onChange={handleChange}
+              required
+              className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-orange-500 focus:outline-none"
+              placeholder="Makhauhelo Moima"
+            />
+          </div>
+          
+          <div>
+            <label className="block text-sm font-bold text-gray-700 mb-1">Email *</label>
+            <input
+              type="email"
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
+              required
+              className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-orange-500 focus:outline-none"
+              placeholder="you@gmail.com"
+            />
+          </div>
+          
+          <div>
+            <label className="block text-sm font-bold text-gray-700 mb-1">WhatsApp Number *</label>
+            <input
+              type="tel"
+              name="whatsapp"
+              value={formData.whatsapp}
+              onChange={handleChange}
+              required
+              className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-orange-500 focus:outline-none"
+              placeholder="+266 5703 1600"
+            />
+          </div>
+          
+          <div>
+            <label className="block text-sm font-bold text-gray-700 mb-1">Location *</label>
+            <input
+              type="text"
+              name="location"
+              value={formData.location}
+              onChange={handleChange}
+              required
+              className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-orange-500 focus:outline-none"
+              placeholder="Maseru, Lesotho"
+            />
+          </div>
+
+          <button
+            type="submit"
+            disabled={status === 'loading'}
+            className="w-full bg-orange-600 hover:bg-orange-700 text-white font-black py-4 px-6 rounded-lg text-lg transition disabled:bg-gray-400 shadow-lg"
+          >
+            {status === 'loading' ? 'SENDING...' : 'START MY HUSTLE - M250'}
           </button>
         </form>
 
-        <p className="text-center text-sm text-[#FFD700]">Support: WhatsApp {settings.whatsapp_support || '+26657031600'} | 🤍💛🖤♾️</p>
+        {message && (
+          <div className={`mt-4 p-4 rounded-lg text-center font-bold ${
+            status === 'success' ? 'bg-green-100 text-green-800 border-2 border-green-300' : 'bg-red-100 text-red-800 border-2 border-red-300'
+          }`}>
+            {message}
+          </div>
+        )}
+
+        <div className="bg-green-50 p-6 rounded-lg border-2 border-green-300 mt-6">
+          <h3 className="font-black text-xl mb-4 text-green-900 text-center">
+            PAY M250 - CHOOSE YOUR METHOD:
+          </h3>
+          
+          <div className="space-y-4">
+            <div className="bg-white p-4 rounded-lg border-2 border-green-200 shadow-sm">
+              <p className="font-black text-green-700 text-lg mb-1">1. ECOCASH</p>
+              <p className="text-3xl font-mono font-bold text-gray-900">+266 6281 8000</p>
+              <p className="text-sm text-gray-600 mt-1">Name: Makhauhelo Moima</p>
+            </div>
+            
+            <div className="bg-white p-4 rounded-lg border-2 border-green-200 shadow-sm">
+              <p className="font-black text-green-700 text-lg mb-1">2. MPESA</p>
+              <p className="text-3xl font-mono font-bold text-gray-900">+266 5703 1600</p>
+              <p className="text-sm text-gray-600 mt-1">Name: Makhauhelo Moima</p>
+            </div>
+            
+            <div className="bg-white p-4 rounded-lg border-2 border-green-200 shadow-sm">
+              <p className="font-black text-green-700 text-lg mb-1">3. BANK TRANSFER</p>
+              <p className="text-sm font-bold text-gray-700">Lesotho Post Bank</p>
+              <p className="text-xl font-mono font-bold text-gray-900">1036202900018</p>
+              <p className="text-sm text-gray-600 mt-1">Name: Makhauhelo Moima</p>
+              <p className="text-xs text-gray-500">Ref: Your WhatsApp Number</p>
+            </div>
+          </div>
+          
+          <div className="bg-yellow-50 border-l-4 border-yellow-500 p-3 mt-4">
+            <p className="text-sm font-bold text-yellow-900">
+              AFTER PAYMENT: WhatsApp proof of payment + your email to +266 5703 1600
+            </p>
+            <p className="text-xs text-yellow-800 mt-1">
+              Kit delivered via WhatsApp in 10 minutes. No PayPal. No waiting.
+            </p>
+          </div>
+        </div>
+
+        <div className="text-center mt-6 pt-6 border-t border-gray-200">
+          <p className="text-xs text-gray-500">
+            © 2026 Fortune Brownies | Level 1 Kitchen Hustler | Maseru, LS
+          </p>
+          <p className="text-xs text-gray-400 mt-1">
+            Questions? WhatsApp: +266 5703 1600
+          </p>
+        </div>
+
       </div>
     </div>
   );
-};
-
-export default Level1Kit;
+                 }
