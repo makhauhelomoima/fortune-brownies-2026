@@ -1,81 +1,202 @@
 import { useEffect, useState } from 'react'
 import { supabase } from '../supabaseClient'
+import { useNavigate } from 'react-router-dom'
 
 export default function Dashboard() {
-  const [user, setUser] = useState(null)
-  const [referrals, setReferrals] = useState(0)
+  const [profile, setProfile] = useState(null)
   const [loading, setLoading] = useState(true)
+  const navigate = useNavigate()
 
   useEffect(() => {
-    const getUser = async () => {
-      const { data: { user } } = await supabase.auth.getUser()
-      if (!user) {
-        window.location.href = '/login'
-      } else {
-        setUser(user)
-        setLoading(false)
-      }
-    }
-    getUser()
+    getProfile()
   }, [])
+
+  const getProfile = async () => {
+    const { data: { user } } = await supabase.auth.getUser()
+    if (!user) {
+      navigate('/login')
+      return
+    }
+
+    const { data, error } = await supabase
+      .from('profiles')
+      .select('*')
+      .eq('id', user.id)
+      .single()
+
+    if (error) console.log('Error:', error)
+    else setProfile(data)
+    setLoading(false)
+  }
 
   const handleLogout = async () => {
     await supabase.auth.signOut()
-    window.location.href = '/'
+    navigate('/login')
+  }
+
+  const copyReferralLink = () => {
+    const link = `https://fortunebrownies-2026.vercel.app/?ref=${profile?.referral_code}`
+    navigator.clipboard.writeText(link)
+    alert('Referral link copied! 🧡🍫♾️')
   }
 
   if (loading) return (
-    <div className="min-h-screen bg-black text-amber-400 flex items-center justify-center text-xl font-bold">
+    <div style={{
+      backgroundColor: '#000',
+      color: '#FF6A00',
+      minHeight: '100vh',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      fontSize: '1.5rem'
+    }}>
       Loading Fort Knox...
     </div>
   )
 
   return (
-    <main className="min-h-screen bg-black text-amber-50 p-4 md:p-8">
-      <div className="max-w-4xl mx-auto">
-        <div className="flex justify-between items-center mb-8">
-          <h1 className="text-2xl md:text-3xl font-black text-amber-400">Fort Knox Dashboard</h1>
-          <button onClick={handleLogout} className="text-amber-300 hover:text-amber-400 font-semibold">
-            Logout
+    <div style={{
+      backgroundColor: '#000000',
+      color: '#FF6A00',
+      minHeight: '100vh',
+      padding: '1rem',
+      fontFamily: 'Arial'
+    }}>
+      <div style={{
+        maxWidth: '500px',
+        margin: '0 auto'
+      }}>
+        {/* Header */}
+        <div style={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          marginBottom: '1.5rem'
+        }}>
+          <h1 style={{ fontSize: '1.8rem' }}>Fort Knox Vault 🧡🍫♾️</h1>
+          <button onClick={handleLogout} style={{
+            backgroundColor: '#FF6A00',
+            color: '#000000',
+            padding: '10px 16px',
+            border: 'none',
+            borderRadius: '8px',
+            fontWeight: 'bold',
+            fontSize: '1rem'
+          }}>
+            Lock
           </button>
         </div>
-        
-        <div className="bg-zinc-900/80 rounded-xl p-4 mb-6 border border-amber-500/20">
-          <p className="text-amber-200/80 text-sm">Welcome back,</p>
-          <p className="text-amber-400 font-bold text-lg">{user.email}</p>
+
+        {/* Profile Card */}
+        <div style={{
+          backgroundColor: '#1a1a1a',
+          border: '2px solid #FF6A00',
+          borderRadius: '16px',
+          padding: '1.5rem',
+          marginBottom: '1.5rem'
+        }}>
+          <h2 style={{ fontSize: '1.4rem', marginBottom: '1rem', color: '#FF6A00' }}>
+            {profile?.full_name || profile?.email}
+          </h2>
+          <div style={{ 
+            backgroundColor: '#FF6A00', 
+            color: '#000', 
+            padding: '6px 12px', 
+            borderRadius: '20px',
+            display: 'inline-block',
+            fontWeight: 'bold',
+            marginBottom: '1rem'
+          }}>
+            Rank: {profile?.rank}
+          </div>
+          <p style={{ fontSize: '0.9rem', opacity: '0.8', color: '#FF6A00' }}>
+            Member since: {new Date(profile?.created_at).toLocaleDateString()}
+          </p>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-6 mb-8">
-          <div className="bg-zinc-900/80 rounded-xl p-6 border border-amber-500/20 hover:border-amber-400/50 transition-all">
-            <div className="text-4xl font-black text-transparent bg-clip-text bg-gradient-to-b from-amber-400 to-yellow-500">M{referrals * 50}</div>
-            <div className="text-amber-200 font-semibold mt-2">Total Earned</div>
-            <div className="text-amber-200/60 text-xs mt-1">Auto-paid 26th</div>
-          </div>
-          <div className="bg-zinc-900/80 rounded-xl p-6 border border-amber-500/20 hover:border-amber-400/50 transition-all">
-            <div className="text-4xl font-black text-transparent bg-clip-text bg-gradient-to-b from-amber-400 to-yellow-500">{referrals}</div>
-            <div className="text-amber-200 font-semibold mt-2">Referrals</div>
-            <div className="text-amber-200/60 text-xs mt-1">M50 each</div>
-          </div>
-          <div className="bg-zinc-900/80 rounded-xl p-6 border border-amber-500/20 hover:border-amber-400/50 transition-all">
-            <div className="text-sm text-amber-200 mb-2 font-semibold">Your Referral Link:</div>
-            <div className="text-xs bg-black p-3 rounded break-all border border-amber-500/20">
-              fortune-brownies-2026.vercel.app?ref={user.id.slice(0,8)}
+        {/* Stats Grid */}
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: '1fr 1fr',
+          gap: '1rem',
+          marginBottom: '1.5rem'
+        }}>
+          <div style={{
+            backgroundColor: '#1a1a1a',
+            border: '1px solid #FF6A00',
+            padding: '1.2rem',
+            borderRadius: '12px',
+            textAlign: 'center'
+          }}>
+            <div style={{ fontSize: '2.2rem', fontWeight: 'bold', color: '#FF6A00' }}>
+              {profile?.total_referrals}
             </div>
+            <div style={{ fontSize: '1rem', color: '#FF6A00' }}>Referrals</div>
+          </div>
+          <div style={{
+            backgroundColor: '#1a1a1a',
+            border: '1px solid #FF6A00',
+            padding: '1.2rem',
+            borderRadius: '12px',
+            textAlign: 'center'
+          }}>
+            <div style={{ fontSize: '2.2rem', fontWeight: 'bold', color: '#FF6A00' }}>
+              {profile?.points_balance}
+            </div>
+            <div style={{ fontSize: '1rem', color: '#FF6A00' }}>Points</div>
           </div>
         </div>
 
-        <div className="bg-zinc-900/80 rounded-xl p-6 border border-amber-500/20">
-          <h2 className="text-xl font-bold text-amber-400 mb-4">Next Payout: April 26, 2026</h2>
-          <p className="text-amber-200/80 mb-4">Share your link on WhatsApp Status. Each M250 signup = M50 to your Ecocash/Mpesa.</p>
-          <a 
-            href={`https://wa.me/?text=Join Fortune Brownies! We don't sell brownies. We sell freedom 🇱🇸 M250 founding member. 0% fees forever. My link: fortune-brownies-2026.vercel.app?ref=${user.id.slice(0,8)}`}
-            target="_blank"
-            className="bg-gradient-to-r from-amber-500 to-yellow-500 text-black font-bold py-2 px-6 rounded-lg inline-block"
-          >
-            Share on WhatsApp
-          </a>
+        {/* Wallet */}
+        <div style={{
+          backgroundColor: '#1a1a1a',
+          border: '2px solid #FF6A00',
+          padding: '1.5rem',
+          borderRadius: '12px',
+          marginBottom: '1.5rem',
+          textAlign: 'center'
+        }}>
+          <div style={{ fontSize: '1rem', marginBottom: '0.5rem', color: '#FF6A00' }}>Wallet Balance</div>
+          <div style={{ fontSize: '2.5rem', fontWeight: 'bold', color: '#FF6A00' }}>
+            M{profile?.wallet_balance?.toFixed(2)}
+          </div>
+        </div>
+
+        {/* Referral Link */}
+        <div style={{
+          backgroundColor: '#1a1a1a',
+          border: '2px solid #FF6A00',
+          padding: '1.5rem',
+          borderRadius: '12px',
+          marginBottom: '1.5rem'
+        }}>
+          <h3 style={{ fontSize: '1.2rem', marginBottom: '1rem', color: '#FF6A00' }}>Your Referral Link</h3>
+          <div style={{
+            backgroundColor: '#000',
+            border: '1px solid #FF6A00',
+            padding: '12px',
+            borderRadius: '8px',
+            fontSize: '0.9rem',
+            marginBottom: '1rem',
+            wordBreak: 'break-all',
+            color: '#FF6A00'
+          }}>
+            fortunebrownies-2026.vercel.app/?ref={profile?.referral_code}
+          </div>
+          <button onClick={copyReferralLink} style={{
+            width: '100%',
+            backgroundColor: '#FF6A00',
+            color: '#000000',
+            padding: '14px',
+            border: 'none',
+            borderRadius: '8px',
+            fontWeight: 'bold',
+            fontSize: '1.1rem'
+          }}>
+            Copy Referral Link
+          </button>
         </div>
       </div>
-    </main>
+    </div>
   )
-      }
+  }
