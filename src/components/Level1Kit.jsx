@@ -69,7 +69,7 @@ export default function Level1Kit() {
     <div className="min-h-screen bg-black text-white font-sans">
       <div className="max-w-3xl mx-auto px-4 py-8">
         
-        {/* COUNTDOWN BANNER */}
+        {/* COUNTDOWN BANNER - M500 AFTER */}
         <div className="bg-gradient-to-r from-yellow-600 to-yellow-500 rounded-xl p-4 mb-6 text-center border-2 border-yellow-400">
           <p className="text-black font-black text-sm mb-2">🔥 FOUNDING MEMBER PRICING ENDS:</p>
           <div className="flex justify-center gap-3 text-black">
@@ -90,7 +90,7 @@ export default function Level1Kit() {
               <div className="text-xs font-bold">SEC</div>
             </div>
           </div>
-          <p className="text-black font-bold text-sm mt-2">July 25, 2026 - Price goes to M350 after</p>
+          <p className="text-black font-bold text-sm mt-2">July 25, 2026 - Price goes to M500 after</p>
         </div>
 
         {/* FORT KNOX BADGE */}
@@ -100,14 +100,14 @@ export default function Level1Kit() {
           </div>
         </div>
 
-        {/* HEADER */}
+        {/* HEADER - M500 STRIKE-THROUGH */}
         <div className="text-center mb-8">
           <h1 className="text-4xl md:text-5xl font-black text-yellow-500 mb-3" style={{fontFamily: 'Montserrat, sans-serif'}}>
             The Fortune Brownies ©2026
           </h1>
           <p className="text-xl text-gray-300 mb-2">Own your town. One tray at a time.</p>
           <p className="text-gray-400">
-            <span className="line-through text-red-400">M350</span> <span className="text-yellow-500 font-black">M250 Founding Member Price</span> - 0% fees. Direct to your bank.
+            <span className="line-through text-red-400">M500</span> <span className="text-yellow-500 font-black">M250 Founding Member Price</span> - 0% fees. Direct to your bank.
           </p>
         </div>
 
@@ -170,7 +170,7 @@ export default function Level1Kit() {
             >
               Lock M250 Price Before July 25 🍫
             </button>
-            <p className="text-center text-xs text-gray-500 mt-2">Only 100 founding member spots</p>
+            <p className="text-center text-xs text-gray-500 mt-2">Only 100 founding member spots • Saves M250</p>
           </div>
         ) : (
           <div className="bg-gray-900 rounded-xl p-6 border-2 border-yellow-500">
@@ -252,43 +252,4 @@ export default function Level1Kit() {
                 <div className="bg-black p-4 rounded-lg border border-yellow-600">
                   <p className="font-black text-yellow-500 mb-1">2. MPESA</p>
                   <p className="text-2xl font-mono font-bold text-white">+266 5703 1600</p>
-                  <p className="text-sm text-gray-400">Name: Makhauhelo Moima</p>
-                </div>
-                
-                <div className="bg-black p-4 rounded-lg border border-yellow-600">
-                  <p className="font-black text-yellow-500 mb-1">3. BANK TRANSFER</p>
-                  <p className="text-sm text-gray-300">Lesotho Post Bank</p>
-                  <p className="text-xl font-mono font-bold text-white">1036202900018</p>
-                  <p className="text-sm text-gray-400">Name: Makhauhelo Moima</p>
-                  <p className="text-xs text-gray-500">Ref: Your WhatsApp Number</p>
-                </div>
-              </div>
-
-              <div className="bg-yellow-900 border-l-4 border-yellow-500 p-4 rounded">
-                <p className="font-black text-yellow-300 mb-2">Step 3: WhatsApp Proof</p>
-                <p className="text-sm text-yellow-200">
-                  Send proof of payment + your email to <strong>+266 5703 1600</strong>
-                </p>
-                <p className="text-xs text-yellow-400 mt-2">
-                  Get approved + instant access to Fort Knox in 10 mins. No PayPal. No waiting.
-                </p>
-              </div>
-            </div>
-          </div>
-        )}
-
-        {/* FOOTER */}
-        <div className="flex gap-2 mt-8 justify-center">
-          <button className="bg-gray-800 text-gray-400 px-4 py-2 rounded-lg text-xs">HQ Login</button>
-          <button className="bg-gray-800 text-gray-400 px-4 py-2 rounded-lg text-xs">Fortune University</button>
-          <a href="https://wa.me/26657031600" className="bg-gray-800 text-gray-400 px-4 py-2 rounded-lg text-xs">WhatsApp Me</a>
-        </div>
-
-        <div className="text-center mt-8 text-xs text-gray-600">
-          © 2026 Fortune Brownies | Level 1 Kitchen Hustler | Khubetsoana, Maseru LS
-        </div>
-
-      </div>
-    </div>
-  );
-}
+                  <p class
