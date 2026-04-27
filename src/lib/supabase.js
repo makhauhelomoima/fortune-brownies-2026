@@ -5,46 +5,45 @@ const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY
 
 export const supabase = createClient(supabaseUrl, supabaseAnonKey)
 
+// FORT KNOX PRICING: M250 until July 25, then M500
 export const getCurrentPricing = async () => {
-  const { data: settings } = await supabase
-    .from('settings')
-    .select('value')
-    .eq('key', 'launch_end_date')
-    .single()
-  
-  const launchEnd = new Date(settings.value)
+  const launchEndDate = new Date('2026-07-25T23:59:59')
   const now = new Date()
-  const isLaunch = now < launchEnd
   
-  const { data: level1 } = await supabase
-    .from('levels')
-    .select('price_maloti, price_usd')
-    .eq('id', 1)
-    .single()
+  const isLaunch = now <= launchEndDate
+  const daysLeft = isLaunch? Math.ceil((launchEndDate - now) / (1000 * 60 * 60 * 24)) : 0
+  
+  const priceMaloti = isLaunch? 250 : 500
+  const priceUSD = isLaunch? 14.38 : 28.76
   
   return {
-    price: isLaunch ? level1.price_maloti : 500,
-    usd: isLaunch ? level1.price_usd : 27.00,
-    isLaunch,
-    daysLeft: Math.max(0, Math.ceil((launchEnd - now) / (1000 * 60 * 60 * 24)))
+    price: priceMaloti,
+    usd: priceUSD,
+    isLaunch: isLaunch,
+    daysLeft: daysLeft
   }
 }
 
-export const registerFranchisee = async ({ phone, fullName, referredBy }) => {
-  const referralCode = `FB${phone.slice(-4)}${Date.now().toString().slice(-3)}`
+// FORT KNOX: Get current logged-in user profile from public.users
+export const getCurrentUser = async () => {
+  const { data: { user } } = await supabase.auth.getUser()
+  if (!user) return null
   
   const { data, error } = await supabase
-    .from('franchisees')
-    .insert({
-      phone,
-      full_name: fullName || 'Makhauhelo Moima',
-      referral_code: referralCode,
-      referred_by_code: referredBy,
-      launch_member: new Date() < new Date('2026-07-25')
-    })
-    .select()
-    .single()
+   .from('users')
+   .select('*')
+   .eq('auth_id', user.id)
+   .single()
+    
+  if (error) {
+    console.error('Fort Knox user fetch error:', error)
+    return null
+  }
   
-  if (error) throw error
   return data
 }
+
+// FORT KNOX: Sign out
+export const signOut = async () => {
+  await supabase.auth.signOut()
+    }
