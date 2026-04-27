@@ -4,7 +4,7 @@ function App() {
   return (
     <div style={{
       backgroundColor: '#000000',
-      color: '#FF6A00',
+      color: '#D4AF37',
       minHeight: '100vh',
       padding: '1rem'
     }}>
@@ -12,73 +12,77 @@ function App() {
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center',
-        marginBottom: '2rem',
+        marginBottom: '1.5rem',
         padding: '0.5rem 0'
       }}>
-        <h3 style={{ fontSize: '1.3rem' }}>Fortune Brownies ©2026</h3>
+        <h3 style={{ fontSize: '1.1rem', color: '#D4AF37' }}>Fortune Brownies ©2026</h3>
         <Link to="/login" style={{
-          backgroundColor: '#FF6A00',
+          backgroundColor: '#00C851',
           color: '#000000',
-          padding: '12px 24px',
+          padding: '10px 20px',
           textDecoration: 'none',
           borderRadius: '8px',
           fontWeight: 'bold',
-          fontSize: '1.1rem'
+          fontSize: '1rem'
         }}>
           Login
         </Link>
       </div>
 
-      <div style={{ textAlign: 'center', marginBottom: '2.5rem' }}>
+      <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
         <h1 style={{ 
-          fontSize: '2.6rem', 
-          marginBottom: '1rem',
-          lineHeight: '1.1'
+          fontSize: '2rem', 
+          marginBottom: '0.8rem',
+          lineHeight: '1.2',
+          color: '#D4AF37'
         }}>
           We don't sell brownies.<br/>We sell freedom.
         </h1>
         <p style={{ 
-          fontSize: '1.3rem', 
-          marginBottom: '2rem',
-          padding: '0 0.5rem'
+          fontSize: '1.1rem', 
+          marginBottom: '1.5rem',
+          padding: '0 0.5rem',
+          color: '#D4AF37',
+          opacity: '0.9'
         }}>
           Lesotho's first automated micro-franchise for women. One tray at a time.
         </p>
 
         <div style={{
-          backgroundColor: '#1a1a1a',
-          border: '2px solid #FF6A00',
-          borderRadius: '16px',
-          padding: '1.5rem',
-          margin: '0 auto 2rem auto',
-          maxWidth: '400px'
+          backgroundColor: '#0a0a0a',
+          border: '2px solid #D4AF37',
+          borderRadius: '12px',
+          padding: '1.2rem',
+          margin: '0 auto 1.5rem auto',
+          maxWidth: '380px'
         }}>
           <h2 style={{ 
-            fontSize: '1.7rem', 
-            marginBottom: '1rem'
+            fontSize: '1.4rem', 
+            marginBottom: '0.8rem',
+            color: '#D4AF37'
           }}>
             M250 Founding Member
           </h2>
-          <p style={{ marginBottom: '0.5rem', fontSize: '1.2rem' }}>
+          <p style={{ marginBottom: '0.4rem', fontSize: '1rem', color: '#D4AF37' }}>
             0% monthly fees. Forever.
           </p>
-          <p style={{ marginBottom: '1.5rem', fontSize: '1.2rem' }}>
-            M50 per referral. Auto-paid instantly.
+          <p style={{ marginBottom: '1.2rem', fontSize: '1rem', color: '#D4AF37' }}>
+            M50 per referral. Auto-paid to Ecocash/Mpesa.
           </p>
           <a href="https://wa.me/26657031600" style={{
             display: 'block',
-            backgroundColor: '#FF6A00',
+            backgroundColor: '#D4AF37',
             color: '#000000',
-            padding: '16px',
+            padding: '14px',
             textDecoration: 'none',
-            borderRadius: '12px',
+            borderRadius: '10px',
             fontWeight: 'bold',
-            fontSize: '1.3rem',
-            marginBottom: '1rem'
+            fontSize: '1.1rem',
+            marginBottom: '0.8rem'
           }}>
             Join WhatsApp — M250
           </a>
-          <p style={{ fontSize: '1rem', opacity: '0.8' }}>
+          <p style={{ fontSize: '0.9rem', opacity: '0.7', color: '#D4AF37' }}>
             Standard price M500 after July 25, 2026
           </p>
         </div>
@@ -86,41 +90,103 @@ function App() {
         <div style={{
           display: 'grid',
           gridTemplateColumns: '1fr 1fr 1fr',
-          gap: '1rem',
-          marginBottom: '2rem',
-          maxWidth: '400px',
-          margin: '0 auto 2rem auto'
+          gap: '0.8rem',
+          marginBottom: '1.5rem',
+          maxWidth: '380px',
+          margin: '0 auto 1.5rem auto'
         }}>
-          {[
-            {num: '1', label: 'Founder', sub: 'You tested it 🤍'},
-            {num: '3', label: 'Automations', sub: 'Payments + Auth + Referrals'},
-            {num: '150+', label: 'Reach', sub: 'Global franchise ready'}
-          ].map((stat, i) => (
-            <div key={i} style={{
-              backgroundColor: '#1a1a1a',
-              border: '1px solid #FF6A00',
-              padding: '1rem 0.5rem',
-              borderRadius: '12px',
-              textAlign: 'center'
-            }}>
-              <div style={{ fontSize: '2.2rem', fontWeight: 'bold' }}>
-                {stat.num}
-              </div>
-              <div style={{ fontSize: '1.1rem', fontWeight: 'bold' }}>{stat.label}</div>
-              <div style={{ fontSize: '0.9rem', opacity: '0.8' }}>{stat.sub}</div>
-            </div>
-          ))}
+          <div style={{
+            backgroundColor: '#0a0a0a',
+            border: '1px solid #D4AF37',
+            padding: '0.8rem 0.4rem',
+            borderRadius: '10px',
+            textAlign: 'center'
+          }}>
+            <div style={{ fontSize: '1.6rem', fontWeight: 'bold', color: '#D4AF37' }}>0</div>
+            <div style={{ fontSize: '0.95rem', fontWeight: 'bold', color: '#D4AF37' }}>Employees</div>
+            <div style={{ fontSize: '0.8rem', opacity: '0.7', color: '#D4AF37' }}>Fully automated</div>
+          </div>
+          <div style={{
+            backgroundColor: '#0a0a0a',
+            border: '1px solid #D4AF37',
+            padding: '0.8rem 0.4rem',
+            borderRadius: '10px',
+            textAlign: 'center'
+          }}>
+            <div style={{ fontSize: '1.6rem', fontWeight: 'bold', color: '#D4AF37' }}>3</div>
+            <div style={{ fontSize: '0.95rem', fontWeight: 'bold', color: '#D4AF37' }}>Systems</div>
+            <div style={{ fontSize: '0.8rem', opacity: '0.7', color: '#D4AF37' }}>Automated stack</div>
+          </div>
+          <div style={{
+            backgroundColor: '#0a0a0a',
+            border: '1px solid #D4AF37',
+            padding: '0.8rem 0.4rem',
+            borderRadius: '10px',
+            textAlign: 'center'
+          }}>
+            <div style={{ fontSize: '1.6rem', fontWeight: 'bold', color: '#D4AF37' }}>150+</div>
+            <div style={{ fontSize: '0.95rem', fontWeight: 'bold', color: '#D4AF37' }}>Countries</div>
+            <div style={{ fontSize: '0.8rem', opacity: '0.7', color: '#D4AF37' }}>Global reach</div>
+          </div>
         </div>
 
-        <div style={{ textAlign: 'center', fontSize: '1.1rem' }}>
-          <p style={{ marginBottom: '0.5rem' }}>
+        <div style={{
+          backgroundColor: '#0a0a0a',
+          border: '1px solid #D4AF37',
+          borderRadius: '12px',
+          padding: '1.2rem',
+          margin: '0 auto 1.5rem auto',
+          maxWidth: '380px'
+        }}>
+          <h2 style={{ 
+            fontSize: '1.3rem', 
+            marginBottom: '1rem',
+            color: '#D4AF37'
+          }}>
+            How It Works
+          </h2>
+          <div style={{ display: 'flex', justifyContent: 'space-around', gap: '0.5rem' }}>
+            {[
+              {num: '1', title: 'Pay M250 Once', sub: 'Ecocash/Mpesa to +266 570 31600. Send screenshot.'},
+              {num: '2', title: 'Get Referral Link', sub: 'Share on WhatsApp Status. Each signup = M50 to you.'},
+              {num: '3', title: 'Cash Out Monthly', sub: 'Automated payouts on 26th. 0% fees. Forever.'}
+            ].map((step, i) => (
+              <div key={i} style={{ flex: 1, textAlign: 'center' }}>
+                <div style={{
+                  backgroundColor: '#D4AF37',
+                  color: '#000000',
+                  width: '28px',
+                  height: '28px',
+                  borderRadius: '50%',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  margin: '0 auto 0.5rem auto',
+                  fontWeight: 'bold',
+                  fontSize: '0.9rem'
+                }}>
+                  {step.num}
+                </div>
+                <div style={{ fontSize: '0.85rem', fontWeight: 'bold', marginBottom: '0.3rem', color: '#D4AF37' }}>
+                  {step.title}
+                </div>
+                <div style={{ fontSize: '0.75rem', opacity: '0.7', color: '#D4AF37' }}>
+                  {step.sub}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div style={{ textAlign: 'center', fontSize: '0.95rem' }}>
+          <p style={{ marginBottom: '0.4rem', color: '#D4AF37' }}>
             <strong>CEO Direct WhatsApp: +266 570 31600</strong>
           </p>
-          <p style={{ fontSize: '1rem', opacity: '0.7', marginBottom: '0.5rem' }}>
+          <p style={{ fontSize: '0.85rem', opacity: '0.6', marginBottom: '0.4rem', color: '#D4AF37' }}>
             Founded: January 2026 | Dev: April 18, 2026 | Launch: April 25, 2026
           </p>
-          <p style={{ fontSize: '1rem', opacity: '0.7' }}>
-            © 2026 Fortune Brownies. From Khubetsoana to the world 🧡🍫♾️
+          <p style={{ fontSize: '0.85rem', opacity: '0.6', color: '#D4AF37' }}>
+            © 2026 Fortune Brownies. From Khubetsoana to the world 🇱🇸
           </p>
         </div>
       </div>
