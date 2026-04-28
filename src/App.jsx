@@ -45,7 +45,7 @@ function App() {
 
         <div className="border-2 border-yellow-400 rounded-xl p-8 mb-8 bg-gray-900/50">
           <h3 className="text-3xl font-bold mb-4">M250 Founding Member</h3>
-          <p className="text-xl mb-2 text-gray-300">\$13.50 USD</p>
+          <p className="text-xl mb-2 text-gray-300">\$14.40 USD</p>
           <p className="mb-2">0% monthly fees. Forever.</p>
           <p className="mb-6">M50 per referral. Auto-paid to Ecocash/Mpesa.</p>
           
@@ -53,11 +53,11 @@ function App() {
             href="https://wa.me/26657031600?text=I%20want%20FORTUNE1%20M250%20Founding%20Member"
             className="bg-yellow-400 text-black px-8 py-4 rounded-lg font-bold text-lg inline-block hover:bg-yellow-300"
           >
-            Join WhatsApp - M250
+            Join WhatsApp - M250 / $14.40
           </a>
           
           <p className="text-sm mt-6 text-gray-400">
-            M250 now. Price goes back to normal M500.00 on July 25th
+            M250 / $14.40 now. Price goes back to normal M500.00 / $28.80 on July 25th
           </p>
         </div>
 
