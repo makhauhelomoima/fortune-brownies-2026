@@ -11,8 +11,8 @@ export default function App() {
   }
 
   const openUSSD = (ussd) => {
-    // Opens phone dialer with USSD pre-filled
-    window.location.href = `tel:${ussd.replace(/\s/g, '')}`
+    const encoded = encodeURIComponent(ussd)
+    window.location.href = `tel:${encoded}`
   }
 
   const confirmPaymentWhatsApp = (method, ussd, account) => {
@@ -33,20 +33,57 @@ Status: MONEY SENT VIA USSD. SEND LEVEL 1 KIT.`
   }
 
   const PaymentForm = ({ method, account, number, ussd, isEFT }) => (
-    <div className="border-2 border-yellow-400 rounded-xl p-5 bg-gray-900/50 text-left">
+    <div className="border-2 border-yellow-400 rounded-xl p-5 bg-gray-900 text-left">
       <h4 className="font-bold text-2xl mb-4 text-center text-yellow-400">{method}</h4>
       
-      <div className="space-y-3 mb-4">
-        <input name="name" placeholder="Insert your name" onChange={handleInput} 
-          className="w-full p-4 rounded bg-black border border-yellow-400/50 text-white text-base" />
-        <input name="town" placeholder="Insert your town" onChange={handleInput}
-          className="w-full p-4 rounded bg-black border border-yellow-400/50 text-white text-base" />
-        <input name="phone" placeholder="Insert number" onChange={handleInput}
-          className="w-full p-4 rounded bg-black border border-yellow-400/50 text-white text-base" />
-        <input name="email" placeholder="Insert email" onChange={handleInput}
-          className="w-full p-4 rounded bg-black border border-yellow-400/50 text-white text-base" />
-        <input value={formData.phone} disabled placeholder="Reference: [your number]"
-          className="w-full p-4 rounded bg-gray-800 border border-yellow-400/30 text-gray-400 text-base" />
+      <div className="space-y-4 mb-4">
+        <input 
+          type="text"
+          name="name" 
+          value={formData.name}
+          placeholder="Insert your name" 
+          onChange={handleInput} 
+          autoComplete="name"
+          className="w-full p-4 rounded bg-black border-2 border-yellow-400 text-white text-lg outline-none focus:ring-2 focus:ring-yellow-400" 
+          style={{pointerEvents: 'auto', touchAction: 'manipulation'}}
+        />
+        <input 
+          type="text"
+          name="town" 
+          value={formData.town}
+          placeholder="Insert your town" 
+          onChange={handleInput}
+          autoComplete="address-level2"
+          className="w-full p-4 rounded bg-black border-2 border-yellow-400 text-white text-lg outline-none focus:ring-2 focus:ring-yellow-400"
+          style={{pointerEvents: 'auto', touchAction: 'manipulation'}}
+        />
+        <input 
+          type="tel"
+          name="phone" 
+          value={formData.phone}
+          placeholder="Insert number" 
+          onChange={handleInput}
+          autoComplete="tel"
+          className="w-full p-4 rounded bg-black border-2 border-yellow-400 text-white text-lg outline-none focus:ring-2 focus:ring-yellow-400"
+          style={{pointerEvents: 'auto', touchAction: 'manipulation'}}
+        />
+        <input 
+          type="email"
+          name="email" 
+          value={formData.email}
+          placeholder="Insert email" 
+          onChange={handleInput}
+          autoComplete="email"
+          className="w-full p-4 rounded bg-black border-2 border-yellow-400 text-white text-lg outline-none focus:ring-2 focus:ring-yellow-400"
+          style={{pointerEvents: 'auto', touchAction: 'manipulation'}}
+        />
+        <input 
+          type="text"
+          value={formData.phone} 
+          disabled 
+          placeholder="Reference: [your number]"
+          className="w-full p-4 rounded bg-gray-800 border-2 border-yellow-400/30 text-gray-400 text-lg" 
+        />
       </div>
 
       <div className="bg-yellow-400/10 p-4 rounded mb-4 text-sm">
@@ -54,7 +91,7 @@ Status: MONEY SENT VIA USSD. SEND LEVEL 1 KIT.`
         <p className="mb-2">Save M250. Normal Price M500.00 ≈ $28.80 USD</p>
         <p className="font-bold text-yellow-400">Send to: {account}</p>
         {number && <p className="text-yellow-400">Number: {number}</p>}
-        <p className="font-bold text-green-400 mt-2">USSD: {ussd}</p>
+        <p className="font-bold text-green-400 mt-2 text-lg">USSD: {ussd}</p>
       </div>
 
       {!isEFT ? (
@@ -62,14 +99,14 @@ Status: MONEY SENT VIA USSD. SEND LEVEL 1 KIT.`
           <button 
             onClick={() => openUSSD(ussd)}
             disabled={!formData.name || !formData.phone}
-            className="w-full bg-green-600 hover:bg-green-500 disabled:bg-gray-700 disabled:cursor-not-allowed text-white font-bold py-4 rounded-lg text-xl transition-all mb-3"
+            className="w-full bg-green-600 hover:bg-green-500 active:bg-green-700 disabled:bg-gray-700 disabled:text-gray-400 text-white font-bold py-5 rounded-lg text-xl transition-all mb-3"
           >
             1. Tap to Dial {ussd} & Pay M250
           </button>
           <button 
             onClick={() => confirmPaymentWhatsApp(method, ussd, account)}
             disabled={!formData.name || !formData.phone}
-            className="w-full bg-blue-600 hover:bg-blue-500 disabled:bg-gray-700 disabled:cursor-not-allowed text-white font-bold py-3 rounded-lg text-lg transition-all"
+            className="w-full bg-blue-600 hover:bg-blue-500 active:bg-blue-700 disabled:bg-gray-700 disabled:text-gray-400 text-white font-bold py-4 rounded-lg text-lg transition-all"
           >
             2. I Sent Money - Confirm via WhatsApp
           </button>
@@ -88,27 +125,30 @@ Status: MONEY SENT VIA USSD. SEND LEVEL 1 KIT.`
             <p>Reference: {formData.phone || '[Your Phone Number]'}</p>
           </div>
           <button 
+            onClick={() => openUSSD(ussd)}
+            className="w-full bg-yellow-400 hover:bg-yellow-300 text-black font-bold py-4 rounded-lg text-lg transition-all mb-3"
+          >
+            Tap to Dial {ussd} Mobile Banking
+          </button>
+          <button 
             onClick={() => confirmPaymentWhatsApp(method, ussd, account)}
             disabled={!formData.name || !formData.phone}
-            className="w-full bg-green-600 hover:bg-green-500 disabled:bg-gray-700 disabled:cursor-not-allowed text-white font-bold py-4 rounded-lg text-xl transition-all"
+            className="w-full bg-green-600 hover:bg-green-500 disabled:bg-gray-700 disabled:text-gray-400 text-white font-bold py-4 rounded-lg text-xl transition-all"
           >
             I Sent EFT - Confirm via WhatsApp
           </button>
-          <p className="text-xs text-center mt-2 text-gray-400">
-            Use your banking app or dial {ussd} for mobile banking
-          </p>
         </>
       )}
     </div>
   )
 
   return (
-    <main className="min-h-screen bg-black text-yellow-400 flex flex-col items-center justify-center p-3 md:p-4 font-sans">
-      <div className="w-full max-w-lg mx-auto text-center">
+    <main className="min-h-screen bg-black text-yellow-400 flex flex-col items-center justify-start p-2 md:p-4 font-sans">
+      <div className="w-[95%] md:max-w-2xl mx-auto text-center">
         
         <div className="flex justify-between items-center mb-6 px-2">
-          <p className="text-base md:text-lg font-semibold">Fortune Brownies ©2026</p>
-          <button className="bg-yellow-400 text-black px-4 py-2 rounded font-bold text-sm md:text-base">
+          <p className="text-lg md:text-xl font-bold">Fortune Brownies ©2026</p>
+          <button className="bg-yellow-400 text-black px-5 py-3 rounded font-bold text-base">
             Login
           </button>
         </div>
@@ -118,40 +158,40 @@ Status: MONEY SENT VIA USSD. SEND LEVEL 1 KIT.`
           We sell freedom.
         </h1>
         
-        <p className="text-lg md:text-xl mb-8 text-gray-300 px-4">
+        <p className="text-xl md:text-2xl mb-8 text-gray-300 px-4">
           Lesotho's first automated micro-franchise for women. One tray at a time.
         </p>
 
         {!paymentMethod ? (
-          <div className="border-2 border-yellow-400 rounded-xl p-5 md:p-8 mx-2 mb-6 bg-gray-900/50">
-            <h3 className="text-2xl md:text-3xl font-bold mb-3">M250 Founding Member</h3>
-            <p className="text-lg md:text-xl mb-2 text-gray-300">≈ $14.40 USD</p>
-            <p className="text-base mb-1">0% monthly fees. Forever.</p>
-            <p className="text-base mb-6">M50 per referral. Auto-paid to Ecocash/Mpesa.</p>
+          <div className="border-2 border-yellow-400 rounded-xl p-6 md:p-8 mb-6 bg-gray-900">
+            <h3 className="text-3xl md:text-4xl font-bold mb-3">M250 Founding Member</h3>
+            <p className="text-xl md:text-2xl mb-2 text-gray-300">≈ $14.40 USD</p>
+            <p className="text-lg mb-1">0% monthly fees. Forever.</p>
+            <p className="text-lg mb-6">M50 per referral. Auto-paid to Ecocash/Mpesa.</p>
             
-            <h4 className="font-bold text-xl mb-3">Get Access - Choose Payment:</h4>
-            <div className="space-y-3">
+            <h4 className="font-bold text-2xl mb-4">Get Access - Choose Payment:</h4>
+            <div className="space-y-4">
               <button onClick={() => setPaymentMethod('Ecocash')}
-                className="bg-yellow-400 text-black px-6 py-4 rounded-lg font-bold text-lg w-full hover:bg-yellow-300">
+                className="bg-yellow-400 text-black px-6 py-5 rounded-lg font-bold text-xl w-full hover:bg-yellow-300 active:bg-yellow-500">
                 1. Ecocash - *199#
               </button>
               <button onClick={() => setPaymentMethod('Mpesa')}
-                className="bg-yellow-400 text-black px-6 py-4 rounded-lg font-bold text-lg w-full hover:bg-yellow-300">
+                className="bg-yellow-400 text-black px-6 py-5 rounded-lg font-bold text-xl w-full hover:bg-yellow-300 active:bg-yellow-500">
                 2. Mpesa - *200#
               </button>
               <button onClick={() => setPaymentMethod('PostBank')}
-                className="bg-yellow-400 text-black px-6 py-4 rounded-lg font-bold text-lg w-full hover:bg-yellow-300">
+                className="bg-yellow-400 text-black px-6 py-5 rounded-lg font-bold text-xl w-full hover:bg-yellow-300 active:bg-yellow-500">
                 3. Post Bank - *120*223# / EFT
               </button>
             </div>
             
-            <p className="text-sm mt-4 text-gray-400">
+            <p className="text-base mt-4 text-gray-400">
               Price goes back to M500.00 ≈ $28.80 USD on July 25th
             </p>
           </div>
         ) : (
-          <div className="mx-2 mb-6">
-            <button onClick={() => setPaymentMethod(null)} className="mb-4 text-base text-gray-400 underline">
+          <div className="mb-6">
+            <button onClick={() => setPaymentMethod(null)} className="mb-4 text-lg text-gray-400 underline">
               ← Back to payment methods
             </button>
             {paymentMethod === 'Ecocash' && <PaymentForm method="Ecocash" account="+26662818000" number="+26662818000" ussd="*199#" />}
@@ -160,8 +200,8 @@ Status: MONEY SENT VIA USSD. SEND LEVEL 1 KIT.`
           </div>
         )}
 
-        <div className="text-center text-sm text-gray-400 px-4">
-          <p className="font-bold text-yellow-400 mb-1 text-base">CEO Direct WhatsApp: +266 570 31600</p>
+        <div className="text-center text-base text-gray-400 px-4 pb-8">
+          <p className="font-bold text-yellow-400 mb-1 text-lg">CEO Direct WhatsApp: +266 570 31600</p>
           <p>Founded: Jan 2026 | Dev: Apr 18 | Launch: Apr 25</p>
           <p className="mt-3">© 2026 Fortune Brownies. From Khubetsoana to the world 🤍🇱🇸</p>
         </div>
