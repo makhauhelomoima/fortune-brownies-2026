@@ -1,35 +1,10 @@
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
-html {
-  font-size: 22px;
-  -webkit-text-size-adjust: 100%;
-}
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 body {
-  background-color: #000000;
-  color: #FF6A00;
-  font-family: Arial, sans-serif;
-  line-height: 1.5;
-  min-height: 100vh;
+  margin: 0;
+  background: #000;
+  color: #FBBF24;
+  font-family: system-ui, -apple-system, sans-serif;
 }
-
-h1 { font-size: 2.4rem; line-height: 1.1; }
-h2 { font-size: 1.9rem; }
-h3 { font-size: 1.5rem; }
-p, div, span { font-size: 1.15rem; }
-
-button, a {
-  font-size: 1.2rem;
-  min-height: 52px;
-  touch-action: manipulation;
-  cursor: pointer;
-}
-
-input, select, textarea {
-  font-size: 1.2rem;
-  min-height: 52px;
-  }
