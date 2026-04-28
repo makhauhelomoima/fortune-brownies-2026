@@ -200,7 +200,7 @@ export default function App() {
     alert(`Thank you! ${item.item_name} purchased for M${item.price_maluti}. Fortune Brownies ©2026 🔐`)
   }
 
-  // ===== MOBILE-FIRST STYLES 🖤💛 =====
+  // ===== FINAL FIT STYLES 🖤💛 =====
   const styles = {
     app: {
       minHeight: '100vh',
@@ -208,7 +208,7 @@ export default function App() {
       color: '#FFD700',
       fontFamily: 'system-ui, -apple-system, sans-serif',
       padding: '15px',
-      paddingBottom: '40px',
+      paddingBottom: '120px', // NOTCHED MORE - CLEARS PHONE FOOTER
       maxWidth: '700px',
       margin: '0 auto'
     },
@@ -224,17 +224,26 @@ export default function App() {
       gap: '10px'
     },
     logo: {
-      fontSize: '20px',
+      fontSize: '26px', // ENLARGED
       fontWeight: '900',
       letterSpacing: '0.5px',
       margin: 0,
       textShadow: '0 0 15px rgba(255,215,0,0.6)'
     },
+    academyName: {
+      fontSize: '24px', // ENLARGED FROM 22px - LOUD
+      color: '#FFA500',
+      fontWeight: '900',
+      margin: '8px 0 0 0',
+      letterSpacing: '2px',
+      textTransform: 'uppercase',
+      textShadow: '0 0 12px rgba(255,165,0,0.6)'
+    },
     heroTitle: {
       fontSize: '36px',
       fontWeight: '900',
       textAlign: 'center',
-      margin: '60px 0 20px 0',
+      margin: '130px 0 20px 0', // NOTCHED DOWN MORE
       lineHeight: '1.2'
     },
     heroSubtitle: {
@@ -414,7 +423,7 @@ export default function App() {
     footer: {
       textAlign: 'center',
       color: '#FFD700',
-      fontSize: '16px',
+      fontSize: '22px',
       fontWeight: '700',
       marginTop: '50px',
       paddingTop: '25px',
@@ -441,7 +450,10 @@ export default function App() {
     return (
       <div style={styles.app}>
         <div style={styles.header}>
-          <h1 style={styles.logo}>Fortune Brownies ©2026</h1>
+          <div>
+            <h1 style={styles.logo}>Fortune Brownies ©2026</h1>
+            <p style={styles.academyName}>Fort Knox Academy</p>
+          </div>
           <button style={styles.loginBtn} onClick={() => setShowAuth(true)}>Login</button>
         </div>
 
@@ -480,14 +492,15 @@ export default function App() {
             </div>
 
             <div style={styles.footer}>
-              <div style={{fontSize: '18px', marginBottom: '8px'}}>Fortune Brownies ©2026</div>
-              <div style={{fontSize: '16px', color: '#FFA500'}}>Fort Knox Academy</div>
-              <div style={{fontSize: '14px', marginTop: '12px'}}>CEO: Makhauhelo Moima</div>
+              <div style={{fontSize: '24px', marginBottom: '8px'}}>Fortune Brownies ©2026</div>
+              <div style={{fontSize: '22px', color: '#FFA500', fontWeight: '900', letterSpacing: '1px'}}>FORT KNOX ACADEMY</div>
+              <div style={{fontSize: '20px', marginTop: '12px'}}>CEO: Makhauhelo Moima</div>
             </div>
           </>
         ) : (
           <div style={styles.card}>
-            <h2 style={{textAlign: 'center', marginTop: 0, fontSize: '28px'}}>Fortune Brownies ©2026<br/>Fort Knox Academy</h2>
+            <h2 style={{textAlign: 'center', marginTop: 0, fontSize: '28px'}}>Fortune Brownies ©2026</h2>
+            <p style={{...styles.academyName, textAlign: 'center', margin: '0 0 20px 0'}}>Fort Knox Academy</p>
             
             <div style={styles.authTab}>
               <button 
@@ -524,7 +537,7 @@ export default function App() {
             Fortune Brownies ©2026
             {isAdmin && <span style={styles.ceoBadge}>CEO</span>}
           </h1>
-          <p style={{fontSize: '14px', margin: '5px 0 0 0', color: '#FFA500'}}>Fort Knox Academy</p>
+          <p style={styles.academyName}>Fort Knox Academy</p>
         </div>
         <button style={{...styles.loginBtn, background: '#000', border: '2px solid #FFD700', color: '#FFD700'}} onClick={signOut}>Sign Out</button>
       </div>
@@ -734,9 +747,9 @@ export default function App() {
       )}
 
       <div style={styles.footer}>
-        <div style={{fontSize: '18px', marginBottom: '8px'}}>Fortune Brownies ©2026</div>
-        <div style={{fontSize: '16px', color: '#FFA500'}}>Fort Knox Academy</div>
-        <div style={{fontSize: '14px', marginTop: '12px'}}>CEO: Makhauhelo Moima</div>
+        <div style={{fontSize: '24px', marginBottom: '8px'}}>Fortune Brownies ©2026</div>
+        <div style={{fontSize: '22px', color: '#FFA500', fontWeight: '900', letterSpacing: '1px'}}>FORT KNOX ACADEMY</div>
+        <div style={{fontSize: '20px', marginTop: '12px'}}>CEO: Makhauhelo Moima</div>
       </div>
     </div>
   )
