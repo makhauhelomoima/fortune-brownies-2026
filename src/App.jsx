@@ -3,11 +3,11 @@ import { supabase } from './supabaseClient'
 
 // ===== FORT KNOX CONFIG 🖤💛 =====
 const ACADEMY_PDF_URL = 'https://lsljnbljovnaclinwxva.supabase.co/storage/v1/object/public/fort-knox-files/Academy/Fort_Knox_Academy_Founding_Recipe.pdf.pdf';
-const ACADEMY_PRICE = 250;
+const ACADEMY_PRICE = M250 / $14.40 until July 25th, then normal price M500 / $28.80;
 const VERCEL_URL = 'https://fortune-brownies-2026.vercel.app';
 const ADMIN_EMAIL = 'makhauhelomoima@gmail.com';
-const WHATSAPP_NUMBER = '+266XXXXXXXX'; // REPLACE WITH YOUR NUMBER
-// ============================================
+const WHATSAPP_NUMBER = '+26657031600';
+============================================
 
 export default function App() {
   const [user, setUser] = useState(null)
