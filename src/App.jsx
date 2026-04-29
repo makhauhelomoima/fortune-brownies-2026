@@ -5,6 +5,7 @@ import ResetPassword from './pages/ResetPassword'
 
 export default function App() {
   const path = window.location.pathname
+  
   if (path === '/signup') return <Signup />
   if (path === '/dashboard') return <Dashboard />
   if (path === '/reset-password') return <ResetPassword />
