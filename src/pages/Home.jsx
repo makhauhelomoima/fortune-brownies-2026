@@ -1,68 +1,75 @@
+import { useState } from 'react'
+
 export default function Home() {
+  const [showPayments, setShowPayments] = useState(false)
+
   return (
-    <div className="min-h-screen bg-black text-yellow-400 p-4 font-mono">
+    <div className="min-h-screen bg-black text-yellow-400 p-4">
       <div className="max-w-md mx-auto">
         
         {/* Header */}
-        <div className="text-center mb-6 border-2 border-yellow-400 rounded-lg p-3">
-          <h1 className="text-xl font-bold">TOTAL REVENUE</h1>
+        <div className="flex justify-between items-start mb-8">
+          <div>
+            <h1 className="text-lg font-bold">Fortune Brownies ©2026</h1>
+            <h2 className="text-md">FORT KNOX ACADEMY</h2>
+          </div>
+          <button className="bg-yellow-400 text-black px-4 py-1 rounded font-bold text-sm">
+            Login
+          </button>
         </div>
 
-        {/* Stats Boxes */}
-        <div className="grid grid-cols-3 gap-3 mb-6">
-          <div className="border-2 border-yellow-400 rounded-lg p-3 text-center">
-            <div className="text-2xl font-bold">M0</div>
-            <div className="text-sm">Academy</div>
-            <div className="text-sm">M250</div>
-          </div>
-          <div className="border-2 border-yellow-400 rounded-lg p-3 text-center">
-            <div className="text-2xl font-bold">M0</div>
-            <div className="text-sm">Gift</div>
-            <div className="text-sm">Shop 🔒</div>
-          </div>
-          <div className="border-2 border-yellow-400 rounded-lg p-3 text-center">
-            <div className="text-2xl font-bold">1</div>
-            <div className="text-sm">Head</div>
-            <div className="text-sm">Count</div>
-          </div>
+        <hr className="border-yellow-400 mb-8" />
+
+        {/* Hero */}
+        <div className="text-center mb-8">
+          <h3 className="text-2xl font-bold mb-4 leading-tight">
+            We don't sell<br/>brownies.<br/>We sell freedom.
+          </h3>
+          <p className="text-sm mb-1">Lesotho's first automated micro-franchise</p>
+          <p className="text-sm mb-1">for women.</p>
+          <p className="text-sm">One tray at a time.</p>
         </div>
 
-        {/* All Members Table */}
-        <div className="border-2 border-yellow-400 rounded-lg p-4 mb-6">
-          <div className="text-center mb-3 text-lg">
-            👥 ALL MEMBERS TABLE 👥
+        {/* M250 Box */}
+        <div className="border-2 border-yellow-400 rounded-lg p-6 shadow-[0_0_20px_#facc15]">
+          <div className="text-center mb-4">
+            <h4 className="text-xl font-bold mb-1">M250 Founding Member</h4>
+            <p className="text-sm">≈ $14.40 USD</p>
+            <p className="text-sm">0% monthly fees. Forever.</p>
           </div>
-          <div className="grid grid-cols-3 text-sm border-b border-yellow-400 pb-2 mb-2">
-            <div>Email</div>
-            <div>Academy</div>
-            <div>Joined</div>
+          
+          <div className="text-center text-sm mb-4">
+            <p>M50 per referral. Auto-paid to Ecocash/Mpesa.</p>
           </div>
-          <div className="grid grid-cols-3 text-sm">
-            <div className="break-all">makhauhelomoima@gmail.com</div>
-            <div>✅ M250</div>
-            <div>4/28/2026</div>
+
+          <div className="text-center mb-4">
+            <p className="font-bold mb-3">Get Access - Choose Payment:</p>
+            
+            <button className="w-full bg-yellow-400 text-black py-3 rounded mb-2 font-bold">
+              1. Ecocash - *199#
+            </button>
+            
+            <button className="w-full bg-yellow-400 text-black py-3 rounded mb-2 font-bold">
+              2. Mpesa - *200#
+            </button>
+            
+            <button className="w-full bg-yellow-400 text-black py-3 rounded mb-4 font-bold">
+              3. Post Bank - *120*223# / EFT
+            </button>
           </div>
+
+          <p className="text-xs text-center">
+            Price goes back to M500.00 ≈ $28.80 USD on July 25th
+          </p>
         </div>
 
-        {/* All Sales Ledger */}
-        <div className="border-2 border-yellow-400 rounded-lg p-4">
-          <div className="text-center mb-3 text-lg">
-            💸 ALL SALES LEDGER 💸
-          </div>
-          <div className="grid grid-cols-4 text-sm border-b border-yellow-400 pb-2 mb-2">
-            <div>Date</div>
-            <div>Customer</div>
-            <div>Product</div>
-            <div>Amount</div>
-          </div>
-          <div className="text-center text-sm py-4">
-            No sales yet - Launch tonight
-          </div>
-        </div>
+        <hr className="border-yellow-400 my-8" />
 
         {/* Footer */}
-        <div className="text-center mt-6 text-xs opacity-70">
-          Fortune Brownies ©2026 🍫♾️🔐🇱🇸
+        <div className="text-center text-sm">
+          <p className="font-bold">Fortune Brownies ©2026</p>
+          <p className="font-bold">FORT KNOX ACADEMY</p>
+          <p className="mt-2">CEO: Makhauhelo Moima</p>
         </div>
 
       </div>
