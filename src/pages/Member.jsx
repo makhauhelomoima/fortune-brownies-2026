@@ -1,7 +1,10 @@
 import { useState, useEffect } from 'react'
 import { createClient } from '@supabase/supabase-js'
 
-const supabase = createClient('https://lsljnbljovnaclinwxva.supabase.co', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxzbGpuYmxqb3ZuYWNsaW53eHZhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzcwNjU5NjAsImV4cCI6MjA5MjY0MTk2MH0.tzouGrC6paS91NFkXNSWI8ZWlMX2RPZlR2W3uspdrr4')
+const supabase = createClient(
+  'https://lsljnbljovnaclinwxva.supabase.co',
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxzbGpuYmxqb3ZuYWNsaW53eHZhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzcwNjU5NjAsImV4cCI6MjA5MjY0MTk2MH0.tzouGrC6paS91NFkXNSWI8ZWlMX2RPZlR2W3uspdrr4'
+)
 
 export default function Member({ profile }) {
   const [myRevenue, setMyRevenue] = useState(0)
@@ -66,7 +69,7 @@ export default function Member({ profile }) {
             <div className="text-xl font-bold">#{rank}</div>
             <div className="text-xs">Your Rank</div>
           </div>
-          <button onClick={copyLink} className="border border-[#fbbf24] rounded p-2 text-center bg-[#ff6a00] text-black">
+          <button onClick={copyLink} className="border border-[#fbbf24] rounded p-2 text-center bg-[#fbbf24] text-black">
             <div className="text-xs font-bold">Copy Link</div>
             <div className="text-xs">{profile.referral_code}</div>
           </button>
