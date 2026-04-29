@@ -1,13 +1,7 @@
-import Login from './pages/Login'
-import Signup from './pages/Signup'
-import Dashboard from './pages/Dashboard'
-import ResetPassword from './pages/ResetPassword'
-
 export default function App() {
-  const path = window.location.pathname
-  
-  if (path === '/signup') return <Signup />
-  if (path === '/dashboard') return <Dashboard />
-  if (path === '/reset-password') return <ResetPassword />
-  return <Login />
+  return (
+    <div style={{backgroundColor: 'black', minHeight: '100vh', color: 'gold', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '24px'}}>
+      FORT KNOX IS ALIVE
+    </div>
+  )
 }
