@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { createClient } from '@supabase/supabase-js'
 
-// Supabase setup - uses your existing .env keys
 const supabase = createClient(
   process.env.REACT_APP_SUPABASE_URL,
   process.env.REACT_APP_SUPABASE_ANON_KEY
@@ -11,16 +10,16 @@ export default function Dashboard() {
   const [members, setMembers] = useState([])
   const [loading, setLoading] = useState(true)
 
-  // Auto-calculate all metrics from Supabase data
+  // Auto-calculate metrics from Supabase
   const totalRevenue = members
-    .filter(member => member.paid === true)
-    .reduce((sum, member) => sum + 250, 0)
+    .filter(m => m.paid === true)
+    .length * 250
 
   const academyRevenue = members
-    .filter(member => member.paid === true && member.member_tier === 'founding')
-    .reduce((sum, member) => sum + 250, 0)
+    .filter(m => m.paid === true && m.member_tier === 'founding')
+    .length * 250
 
-  const headCount = members.filter(member => member.paid === true).length
+  const headCount = members.filter(m => m.paid === true).length
 
   useEffect(() => {
     fetchMembers()
@@ -29,7 +28,6 @@ export default function Dashboard() {
   async function fetchMembers() {
     setLoading(true)
     try {
-      // CRITICAL: select('*') pulls ALL columns including referral_code, paid, etc
       const { data, error } = await supabase
         .from('founding_members')
         .select('*')
@@ -47,6 +45,11 @@ export default function Dashboard() {
     }
   }
 
+  async function handleLogout() {
+    await supabase.auth.signOut()
+    window.location.href = '/'
+  }
+
   if (loading) {
     return (
       <div className="bg-black min-h-screen flex items-center justify-center">
@@ -59,15 +62,23 @@ export default function Dashboard() {
     <div className="bg-black min-h-screen text-white p-4">
       <div className="max-w-4xl mx-auto">
         
-        {/* HEADER */}
-        <div className="text-center mb-6">
-          <h1 className="text-yellow-400 font-bold text-xl">
-            Fortune Brownies ©2026 <span className="bg-red-600 text-xs px-1 ml-1">CEO</span>
-          </h1>
-          <h2 className="text-yellow-400 font-bold text-lg">FORT KNOX ACADEMY</h2>
+        {/* HEADER + LOGOUT */}
+        <div className="flex justify-between items-center mb-6">
+          <div>
+            <h1 className="text-yellow-400 font-bold text-lg">
+              Fortune Brownies ©2026 <span className="bg-red-600 text-xs px-1 ml-1">CEO</span>
+            </h1>
+            <h2 className="text-yellow-400 font-bold">FORT KNOX ACADEMY</h2>
+          </div>
+          <button 
+            onClick={handleLogout}
+            className="border border-yellow-500 text-yellow-400 px-3 py-1 rounded text-sm"
+          >
+            Logout
+          </button>
         </div>
 
-        {/* REVENUE EMPIRE - YOUR EXISTING SECTION */}
+        {/* REVENUE EMPIRE */}
         <div className="border border-yellow-500 rounded-lg p-4 mb-4">
           <h2 className="text-yellow-400 text-center font-bold mb-3">
             💰 REVENUE EMPIRE 💰
@@ -94,7 +105,7 @@ export default function Dashboard() {
           </div>
         </div>
 
-        {/* REFERRAL EMPIRE - NEW TABLE THAT KILLS THOMAS */}
+        {/* REFERRAL EMPIRE - THOMAS PROOF */}
         <div className="border border-yellow-500 rounded-lg p-4 mb-4">
           <h2 className="text-yellow-400 text-center font-bold mb-3">
             🔗 REFERRAL EMPIRE 🔗
@@ -110,7 +121,6 @@ export default function Dashboard() {
                   <th className="text-left p-2">Code</th>
                   <th className="text-center p-2">Refs</th>
                   <th className="text-left p-2">M50 Earned</th>
-                  <th className="text-left p-2">Joined</th>
                 </tr>
               </thead>
               <tbody>
@@ -138,13 +148,10 @@ export default function Dashboard() {
                     <td className="p-2 text-xs text-yellow-400 font-bold">
                       M{member.referral_earnings || 0}
                     </td>
-                    <td className="p-2 text-xs text-gray-400">
-                      {member.created_at? new Date(member.created_at).toLocaleDateString('en-GB') : 'N/A'}
-                    </td>
                   </tr>
                 )) : (
                   <tr>
-                    <td colSpan="7" className="text-center text-gray-500 py-6">
+                    <td colSpan="6" className="text-center text-gray-500 py-6">
                       No members yet - Launch tonight
                     </td>
                   </tr>
