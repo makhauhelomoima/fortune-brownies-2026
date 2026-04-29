@@ -1,7 +1,22 @@
-export default function App() {
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import Home from './pages/Home'
+import Login from './pages/Login'
+import Signup from './pages/Signup'
+import Dashboard from './pages/Dashboard'
+import ResetPassword from './pages/ResetPassword'
+
+function App() {
   return (
-    <div style={{backgroundColor: 'black', minHeight: '100vh', color: 'gold', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '24px'}}>
-      FORT KNOX IS ALIVE
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/reset-password" element={<ResetPassword />} />
+      </Routes>
+    </BrowserRouter>
   )
 }
+
+export default App
