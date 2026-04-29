@@ -8,7 +8,7 @@ export default function Home() {
   }
 
   const handlePostBank = () => {
-    alert('Post Bank Payment:\n\nDial: *120*223#\nOR\nEFT to:\nFortune Brownies\nAcc: 123456789\nBranch: 123456\n\nSend proof to WhatsApp: +266 XXXX XXXX')
+    alert('Post Bank Payment:\n\nDial: *120*223#\nOR\nEFT to:\Makhauhelo Moima\nAcc: 1036202900018\nBranch: BONHOMME\n\nSend proof to WhatsApp: +266 57031600')
   }
 
   const handleLogin = () => {
@@ -38,7 +38,7 @@ export default function Home() {
         {/* Hero */}
         <div className="text-center mb-8">
           <h3 className="text-2xl font-bold mb-4 leading-tight">
-            We don't sell<br/>brownies.<br/>We sell freedom.
+            We don't just sell<br/>brownies.<br/>We sell freedom.
           </h3>
           <p className="text-sm mb-1">Lesotho's first automated micro-franchise</p>
           <p className="text-sm mb-1">for women.</p>
