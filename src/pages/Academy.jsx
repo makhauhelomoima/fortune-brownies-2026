@@ -1,7 +1,10 @@
 import { useState, useEffect } from 'react'
 import { createClient } from '@supabase/supabase-js'
-eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9. 'https://lsljnbljovnaclinwxva.supabase.co' 'eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxzbGpuYmxqb3ZuYWNsaW53eHZhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzcwNjU5NjAsImV4cCI6MjA5MjY0MTk2MH0.tzouGrC6paS91NFkXNSWI8ZWlMX2RPZlR2W3uspdrr4
-const supabase = createC', '')
+
+const supabase = createClient(
+  'https://lsljnbljovnaclinwxva.supabase.co',
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxzbGpuYmxqb3ZuYWNsaW53eHZhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzcwNjU5NjAsImV4cCI6MjA5MjY0MTk2MH0.tzouGrC6paS91NFkXNSWI8ZWlMX2RPZlR2W3uspdrr4'
+)
 
 export default function Academy({ profile }) {
   const [posts, setPosts] = useState([])
@@ -9,7 +12,9 @@ export default function Academy({ profile }) {
   const [file, setFile] = useState(null)
   const [comments, setComments] = useState({})
 
-  useEffect(() => { fetchPosts() }, [])
+  useEffect(() => {
+    fetchPosts()
+  }, [])
 
   async function fetchPosts() {
     const { data: postsData } = await supabase
@@ -32,7 +37,10 @@ export default function Academy({ profile }) {
       }
     }
     await supabase.from('academy_posts').insert({
-      author_id: profile.id, author_email: profile.email, content: newPost, attachment_url
+      author_id: profile.id,
+      author_email: profile.email,
+      content: newPost,
+      attachment_url
     })
     setNewPost('')
     setFile(null)
@@ -42,18 +50,29 @@ export default function Academy({ profile }) {
   async function addComment(postId, commentText) {
     if (!commentText.trim()) return
     await supabase.from('post_comments').insert({
-      post_id: postId, author_id: profile.id, author_email: profile.email, comment: commentText
+      post_id: postId,
+      author_id: profile.id,
+      author_email: profile.email,
+      comment: commentText
     })
     setComments({...comments, [postId]: '' })
     fetchPosts()
   }
 
   async function toggleReaction(postId) {
-    const { data: existing } = await supabase.from('post_reactions').select('*').eq('post_id', postId).eq('user_id', profile.id).single()
+    const { data: existing } = await supabase
+    .from('post_reactions')
+    .select('*')
+    .eq('post_id', postId)
+    .eq('user_id', profile.id)
+    .single()
     if (existing) {
       await supabase.from('post_reactions').delete().eq('id', existing.id)
     } else {
-      await supabase.from('post_reactions').insert({ post_id: postId, user_id: profile.id })
+      await supabase.from('post_reactions').insert({
+        post_id: postId,
+        user_id: profile.id
+      })
     }
     fetchPosts()
   }
@@ -98,7 +117,11 @@ export default function Academy({ profile }) {
             className="w-full bg-black border border-[#fbbf24] rounded p-2 mb-2 text-[#fbbf24] placeholder-[#fbbf24]/50 text-xs"
             rows="3"
           />
-          <input type="file" onChange={(e) => setFile(e.target.files[0])} className="w-full text-xs mb-2" />
+          <input 
+            type="file" 
+            onChange={(e) => setFile(e.target.files[0])}
+            className="w-full text-xs mb-2"
+          />
           <button onClick={createPost} className="w-full bg-[#fbbf24] text-black py-2 rounded font-bold text-xs">Post</button>
         </div>
         {posts.map((post) => (
@@ -111,9 +134,13 @@ export default function Academy({ profile }) {
               )}
             </div>
             <p className="text-xs mb-2 whitespace-pre-wrap">{post.content}</p>
-            {post.attachment_url && <a href={post.attachment_url} target="_blank" className="text-xs underline text-[#fbbf24]">📎 Download</a>}
+            {post.attachment_url && (
+              <a href={post.attachment_url} target="_blank" rel="noopener noreferrer" className="text-xs underline text-[#fbbf24]">📎 Download Attachment</a>
+            )}
             <div className="flex gap-3 mt-2 pt-2 border-t border-[#fbbf24]/30">
-              <button onClick={() => toggleReaction(post.id)} className="text-xs">👍 {post.post_reactions?.length || 0}</button>
+              <button onClick={() => toggleReaction(post.id)} className="text-xs">
+                👍 {post.post_reactions?.length || 0}
+              </button>
               <div className="text-xs opacity-70">💬 {post.post_comments?.length || 0}</div>
             </div>
             <div className="mt-2">
@@ -130,7 +157,12 @@ export default function Academy({ profile }) {
                   onChange={(e) => setComments({...comments, [post.id]: e.target.value })}
                   className="flex-1 bg-black border border-[#fbbf24] rounded px-2 py-1 text-xs text-[#fbbf24]"
                 />
-                <button onClick={() => addComment(post.id, comments[post.id])} className="bg-[#fbbf24] text-black px-2 py-1 rounded text-xs font-bold">Send</button>
+                <button 
+                  onClick={() => addComment(post.id, comments[post.id])}
+                  className="bg-[#fbbf24] text-black px-2 py-1 rounded text-xs font-bold"
+                >
+                  Send
+                </button>
               </div>
             </div>
           </div>
