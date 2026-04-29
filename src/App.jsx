@@ -43,7 +43,7 @@ function App() {
     setLoading(false)
   }
 
-  if (loading) return <div className="min-h-screen bg-black text-yellow-400 flex items-center justify-center">Loading Fort Knox...</div>
+  if (loading) return <div className="min-h-screen bg-black text-[#fbbf24] flex items-center justify-center">Loading Fort Knox...</div>
 
   const isAdmin = profile?.role === 'admin'
   const isMember = profile?.is_member || isAdmin
