@@ -1,43 +1,100 @@
 import { useState } from 'react'
-import { supabase } from '../supabaseClient'
-import { useNavigate } from 'react-router-dom'
+import { createClient } from '@supabase/supabase-js'
+
+const supabase = createClient(
+  process.env.REACT_APP_SUPABASE_URL,
+  process.env.REACT_APP_SUPABASE_ANON_KEY
+)
 
 export default function Login() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [loading, setLoading] = useState(false)
-  const [isLogin, setIsLogin] = useState(true)
-  const navigate = useNavigate()
+  const [message, setMessage] = useState('')
 
-  const handleAuth = async (e) => {
+  // NORMAL LOGIN
+  async function handleLogin(e) {
     e.preventDefault()
     setLoading(true)
-    
-    if (isLogin) {
-      const { error } = await supabase.auth.signInWithPassword({ email, password })
-      if (error) alert(error.message)
-      else navigate('/dashboard')
+    const { error } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    })
+    if (error) {
+      setMessage('Wrong password. Try again or reset below.')
     } else {
-      const { error } = await supabase.auth.signUp({ email, password })
-      if (error) alert(error.message)
-      else alert('Check your email for confirmation! Then login.')
+      window.location.href = '/dashboard' // Or wherever Admin is
+    }
+    setLoading(false)
+  }
+
+  // PASSWORD RESET - THIS FIXES YOUR PROBLEM
+  async function handlePasswordReset() {
+    if (!email) {
+      setMessage('Enter your email first, then click Reset Password')
+      return
+    }
+    setLoading(true)
+    const { error } = await supabase.auth.resetPasswordForEmail(email, {
+      redirectTo: 'https://ownies-2026.vercel.app/reset-password', // Page where they set new password
+    })
+    if (error) {
+      setMessage('Error: ' + error.message)
+    } else {
+      setMessage('Check your email. Password reset link sent ✅')
     }
     setLoading(false)
   }
 
   return (
-    <div style={{ backgroundColor: '#000000', color: '#D4AF37', minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '1rem' }}>
-      <form onSubmit={handleAuth} style={{ backgroundColor: '#0a0a0a', padding: '2rem', borderRadius: '16px', border: '2px solid #D4AF37', width: '100%', maxWidth: '400px' }}>
-        <h2 style={{ textAlign: 'center', marginBottom: '1.5rem', fontSize: '1.6rem', color: '#D4AF37' }}>Fort Knox Access</h2>
-        <input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} style={{ width: '100%', padding: '14px', marginBottom: '1rem', backgroundColor: '#000000', border: '1px solid #D4AF37', color: '#D4AF37', borderRadius: '8px', fontSize: '1.05rem' }} required />
-        <input type="password" placeholder="Password - min 6 chars" value={password} onChange={(e) => setPassword(e.target.value)} style={{ width: '100%', padding: '14px', marginBottom: '1.5rem', backgroundColor: '#000000', border: '1px solid #D4AF37', color: '#D4AF37', borderRadius: '8px', fontSize: '1.05rem' }} required />
-        <button type="submit" disabled={loading} style={{ width: '100%', padding: '14px', backgroundColor: '#00C851', color: '#000000', border: 'none', borderRadius: '8px', fontWeight: 'bold', cursor: 'pointer', fontSize: '1.1rem', marginBottom: '1rem' }}>
-          {loading ? 'Processing...' : isLogin ? 'Unlock Fort Knox' : 'Create Account'}
+    <div className="bg-black min-h-screen flex items-center justify-center p-4">
+      <div className="border border-yellow-500 rounded-lg p-6 w-full max-w-sm">
+        <h1 className="text-yellow-400 text-center font-bold text-xl mb-4">
+          FORT KNOX LOGIN
+        </h1>
+        
+        <form onSubmit={handleLogin}>
+          <input
+            type="email"
+            placeholder="Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            className="w-full p-2 mb-3 bg-gray-900 border border-yellow-700 rounded text-white"
+            required
+          />
+          <input
+            type="password"
+            placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            className="w-full p-2 mb-3 bg-gray-900 border border-yellow-700 rounded text-white"
+            required
+          />
+          
+          <button
+            type="submit"
+            disabled={loading}
+            className="w-full bg-yellow-500 text-black font-bold p-2 rounded mb-2"
+          >
+            {loading? 'Loading...' : 'Login'}
+          </button>
+        </form>
+
+        {/* THIS IS THE RESET BUTTON THOMAS NEEDS */}
+        <button
+          onClick={handlePasswordReset}
+          disabled={loading}
+          className="w-full border border-yellow-500 text-yellow-400 p-2 rounded"
+        >
+          Forgot Password? Reset Here
         </button>
-        <p onClick={() => setIsLogin(!isLogin)} style={{ textAlign: 'center', textDecoration: 'underline', cursor: 'pointer', fontSize: '1rem', color: '#D4AF37' }}>
-          {isLogin ? 'Need account? Sign up' : 'Have account? Login'}
-        </p>
-      </form>
+
+        {message && (
+          <div className="text-center text-sm mt-3 text-yellow-400">
+            {message}
+          </div>
+        )}
+      </div>
     </div>
   )
-                       }
+}
